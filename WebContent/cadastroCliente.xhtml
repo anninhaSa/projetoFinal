@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<h:head>
+		<title>Arte das Unhas - Cadastro de Cliente</title>
+		<link type="text/css" rel="stylesheet" href="css/principal.css"/>
+	</h:head>
+	
+	<h:body>
+		<p:panel styleClass="cabecalho">
+			<h:outputLink value="menu.jsf">
+				<p:graphicImage value="/imagem/arteLilas.png" width="100" height="100"/>
+	        </h:outputLink>
+			
+			                                             <!-- LOGOUT DO USÁRIO -->
+			
+			<div class = "boasVindas">
+				<h:form id="formLogout">
+					<h:outputText value="Seja Bem-vindo(a) #{mbCadCliente.nomeUsrLogado}!"/> <p:spacer width="10px;"/>
+					<p:commandButton value="Sair" action="#{mbCadCliente.efetuaLogout}" ajax="false" />
+				</h:form>
+			</div>
+		</p:panel>
+		
+		<p:panel styleClass="dtCadCliente">
+		
+		                                                  <!-- BUSCA DE CLIENTE -->
+		
+			<h:form id="formBuscaCliente">
+				<h:outputText value="Nome"/> <p:spacer width="5px;"/>
+				<p:inputText value="#{mbCadCliente.nome}" size="90"/> <p:spacer width="30px;"/>
+				<h:outputText value="Telefone"/> <p:spacer width="5px;"/>
+				<p:inputMask value="#{mbCadCliente.telefone}" mask="(99)9999-9999?9"/> <p:spacer width="15px;"/>
+				<p:commandButton value="Buscar" ajax="true" action="#{mbCadCliente.atualiza}" update=":formListCliente"/> <p:spacer width="30px;"/>
+				<p:commandButton value="Cadastrar Cliente" onclick="incDialog.show()"/>
+			</h:form>
+			
+				
+		</p:panel>		
+						                      <!-- FORMULÁRIO DE INCLUSÃO DE CLIENTE -->
+			
+		<p:dialog header="Cadastro de Cliente - Inclusão" widgetVar="incDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+			<h:form id="formCadCliente">
+				<h:panelGrid columns="4">
+					<h:outputLabel value="Nome"/>
+					<p:inputText id="nomeInc" value="#{mbCadCliente.cliente.nome}" size="90" required="true"/>
+					<h:outputLabel value="CPF"/>
+					<p:inputMask id="cpfInc" value="#{mbCadCliente.cliente.CPF}" mask="999.999.999-99"/>
+					
+					<h:outputLabel value="email"/>
+					<p:inputText id="emailInc" value="#{mbCadCliente.cliente.contato.email}" size="70"/>
+					<h:outputLabel value="RG"/>
+					<p:inputMask id="rgInc" value="#{mbCadCliente.cliente.RG}" size="11"/>
+					
+					<h:outputLabel value="Tel. Res."/>
+					<p:inputMask id="telResInc" value="#{mbCadCliente.telResidencial}" mask="(99)9999-9999"/>
+					<h:outputLabel value="Cel."/>
+					<p:inputMask id="telCelInc" value="#{mbCadCliente.celular}" mask="(99)9999-9999?9"/>
+					
+					<h:outputLabel value="Tel. Com."/>
+					<p:inputMask id="telComInc" value="#{mbCadCliente.telComercial}" mask="(99)9999-9999"/>
+					<h:outputLabel value="Dat. Nasc."/>
+					<p:inputMask id="dataNascInc" value="#{mbCadCliente.data}" mask="99/99/9999"/>
+					
+					<h:outputLabel value="Logradouro"/>
+					<p:inputText id="logradouroInc" value="#{mbCadCliente.cliente.contato.endereco.logradouro}" size="70"/>
+					<h:outputLabel value="nº"/>
+					<p:inputText id="numeroInc" value="#{mbCadCliente.cliente.contato.endereco.numero}" size="4"/>
+					
+					<h:outputLabel value="Complemento"/>
+					<p:inputText id="complemInc" value="#{mbCadCliente.cliente.contato.endereco.complemento}" size="60"/>
+					<h:outputLabel value="Bairro"/>
+					<p:inputText id="bairroInc" value="#{mbCadCliente.cliente.contato.endereco.bairro}" size="20"/>
+					
+					<h:outputLabel value="Cidade"/>
+					<p:inputText id="cidadeInc" value="#{mbCadCliente.cliente.contato.endereco.cidade}" size="30"/>
+					<h:outputLabel value="UF"/>
+					<p:inputText id="ufInc" value="#{mbCadCliente.cliente.contato.endereco.uf}" size="2"/>
+					
+					<h:outputLabel value="CEP"/>
+					<p:inputMask id="cepInc" value="#{mbCadCliente.cliente.contato.endereco.cep}" mask="99.999-99" size="7"/>
+					<h:outputLabel value=""/>
+					<h:outputLabel value=""/>
+					
+					<h:outputLabel value="Observação"/>
+					<p:inputTextarea id="obsInc" value="#{mbCadCliente.cliente.observacao}"/>
+					<h:outputLabel value=""/>
+					<h:outputLabel value=""/>
+					
+					<h:outputLabel value=""/>
+					<h:outputLabel value=""/>
+					<h:outputLabel value=""/>
+					<p:commandButton value="Cadastrar" action="#{mbCadCliente.incluiCliente}" 
+					update=":formCadCliente,:formListCliente" oncomplete="incDialog.hide()" ajax="true"/>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</h:body>
+</html>

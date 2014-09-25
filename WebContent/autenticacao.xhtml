@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:head>
+		<title>Arte das Unhas - Autenticação</title>
+		<link type="text/css" rel="stylesheet" href="css/principal.css"/>
+	</h:head>
+	
+	<h:body>
+		<p:panel styleClass="cabecalho" >
+			<h:outputLink>
+				<p:graphicImage value="/imagem/arteLilas.png" width="100" height="100"/>
+			</h:outputLink>
+		</p:panel>
+		
+		<p:panel styleClass="autenticacao">
+			<h:form id="formAutenticacao">
+				<h:panelGrid columns="2">
+					<h:outputText value="Usuário " />
+					<p:inputText value="#{mbAutenticacao.autenticacao.usuario}" size="15" />
+	
+					<h:outputText value="Senha" />
+					<p:password value="#{mbAutenticacao.autenticacao.senha}" size="15"/>
+					
+					<p:commandButton value="OK" action="#{mbAutenticacao.efetuaLogin}" update="formAutenticacao" ajax="false"/>
+				</h:panelGrid>
+				<p:message for="formAutenticacao" />
+			</h:form>
+		</p:panel>
+	</h:body>
+</html>

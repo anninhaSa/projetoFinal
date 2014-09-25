@@ -1,0 +1,6 @@
+FAZER JUNIT                                                                                  ok
+1. Ao incluir registro um funcionário novo, o ID do pessoa não é inserido na tabela contato. ok
+2. Consultar cliente pela tela.
+3. Validar entradas/saídas na tela de consulta do cliente para evitar exception.
+4. Construir menu da tela de cadastro do cliente
+5. Construir tela do cadastro de cliente  

@@ -1,0 +1,73 @@
+@CHARSET "ISO-8859-1";
+
+body
+{
+	font-family: geneva, sans-serif;
+}
+
+.cabecalho
+{
+	background-color: #ffe1ff;
+	width:            100%;
+	text-align:       left;
+}
+
+.ui-widget
+{
+	font-size: 13px !important;
+}
+
+.autenticacao
+{
+	background-color: #ffe1ff;
+	font-family:      geneva, sans-serif;
+	font-size:        12px;
+	margin-left:      40%;
+	margin-top:       12%;
+	width:            210px;
+	padding:          1%;
+}
+
+.boasVindas
+{
+	margin-top: 70px;
+	float:      right;
+}
+
+.menu
+{
+	background-color: #ffe1ff;
+	font-family:      geneva, sans-serif;
+	font-size:        12px;
+	padding:          5px;
+	margin-top:       3%;
+	width:            170px;
+	padding-top:      10%;
+	padding-bottom:   10%;
+}
+
+.dtCadCliente
+{
+	width:      100%;
+	margin-top: 1%;
+}
+
+.dtNome
+{
+	width: 50%;
+}
+
+.dtEmail
+{
+	width: 30%;
+}
+
+.dtDataNasc
+{
+	width: 10%;
+}
+
+.dtTelefone
+{
+	width: 10%;
+}
