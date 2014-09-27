@@ -1,27 +1,25 @@
 package persistence;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import util.Util;
 import entity.Cliente;
 import entity.Contato;
 import entity.Endereco;
 
 public class ClienteDAO_tst extends TestCase
 {
-
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testInsereCliente( )
 	{
 		boolean    bOk = false;
 		ClienteDAO cd  = new ClienteDAO( );
 		
-		Cliente c = new Cliente( "Anna", new Date( "1986/11/03" ), null, null );
+		Cliente c = new Cliente( "Anna", Util.trataData("03/11/1986"), null, null );
 		
 		c.setContato( new Contato( "annasa03@gmail.com.br", null, null, null, null, null, null, null ) ); 
 		
@@ -42,7 +40,7 @@ public class ClienteDAO_tst extends TestCase
 		
 		bOk = cd.insereCliente( c );
 		
-		c = new Cliente( "Leda", new Date( "2008/08/26" ), null, null );
+		c = new Cliente( "Leda", Util.trataData("26/08/2008"), null, null );
 		
 		c.setContato( new Contato( "leda.maria@gmail.com.br", null, null, null, null, null, null, null ) );
 		
@@ -59,7 +57,7 @@ public class ClienteDAO_tst extends TestCase
 		
 		assertTrue( bOk );
 		
-		c = new Cliente( "Deny", new Date( "1935/05/15" ), null, null );
+		c = new Cliente( "Deny", Util.trataData("15/05/1935"), null, null );
 		
 		c.setContato( new Contato( "deny.lopes@gmail.com.br", null, null, null, null, null, null, null ) );
 		
@@ -74,7 +72,7 @@ public class ClienteDAO_tst extends TestCase
 		
 		bOk = bOk && cd.insereCliente( c );
 		
-		c = new Cliente( "Denise", new Date( "1955/08/04" ), null, null );
+		c = new Cliente( "Denise", Util.trataData("04/08/1955"), null, null );
 		
 		c.setContato( new Contato( "denise.bastos@gmail.com.br", null, null, null, null, null, null, null ) );
 		
@@ -89,7 +87,7 @@ public class ClienteDAO_tst extends TestCase
 		
 		bOk = bOk && cd.insereCliente( c );
 		
-		c = new Cliente( "Vítor", new Date( "1995/05/29" ), null, null );
+		c = new Cliente( "Vítor", Util.trataData("29/05/1995"), null, null );
 		
 		c.setContato( new Contato( "vitor.oliveira@gmail.com.br", null, null, null, null, null, null, null ) );
 		
@@ -104,7 +102,7 @@ public class ClienteDAO_tst extends TestCase
 		
 		bOk = bOk && cd.insereCliente( c );
 		
-		c = new Cliente( "Kamilla", new Date( "1997/06/22" ), null, null );
+		c = new Cliente( "Kamilla", Util.trataData("22/06/1997"), null, null );
 		
 		c.setContato( new Contato( "kamilla.bastos@gmail.com.br", null, null, null, null, null, null, null ) );
 		

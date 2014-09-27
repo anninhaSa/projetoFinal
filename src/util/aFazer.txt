@@ -1,6 +1,8 @@
 FAZER JUNIT                                                                                  ok
 1. Ao incluir registro um funcionário novo, o ID do pessoa não é inserido na tabela contato. ok
-2. Consultar cliente pela tela.
-3. Validar entradas/saídas na tela de consulta do cliente para evitar exception.
-4. Construir menu da tela de cadastro do cliente
-5. Construir tela do cadastro de cliente  
+2. Consultar cliente pela tela.                                                              ok
+3. Validar entradas/saídas na tela de consulta do cliente para evitar exception.             ok
+4. Construir menu da tela de cadastro do cliente                                             ok
+5. Construir tela do cadastro de cliente                                                     ok
+6. Fazer testes da validação de cliente
+7. Enviar mensagem de erro ou aviso quando não for possível incluir o cliente.

@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -18,8 +19,13 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @SequenceGenerator( name = "seq_autenticacao", sequenceName = "seq_autenticacao" )
-public class Autenticacao
+public class Autenticacao implements Serializable
 {
+	/**
+	 * Serial
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue( generator = "seq_autenticacao" )
 	private int idAutenticacao;

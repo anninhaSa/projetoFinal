@@ -135,7 +135,7 @@ public class PessoaDAO extends DAO
 				pessoa.getContato( ).getEndereco( ).setBairro     ( rs.getString( "bairro"      ) );
 				pessoa.getContato( ).getEndereco( ).setCidade     ( rs.getString( "cidade"      ) );
 				pessoa.getContato( ).getEndereco( ).setUF         ( rs.getString( "uf"          ) );
-				pessoa.getContato( ).getEndereco( ).setCEP        ( rs.getString( "cep"         ) );
+				pessoa.getContato( ).getEndereco( ).setCep        ( rs.getString( "cep"         ) );
 				
 				//Telefone Residencial
 				pessoa.getContato( ).setDddResidencial( rs.getString( "dddResidencial" ) );

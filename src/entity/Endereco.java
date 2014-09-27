@@ -65,7 +65,7 @@ public class Endereco
 		setBairro     ( "" );
 		setCidade     ( "" );
 		setUF         ( "" );
-		setCEP        ( "" );
+		setCep        ( "" );
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class Endereco
 		setBairro     ( bairro      );
 		setCidade     ( cidade      );
 		setUF         ( uf          );
-		setCEP        ( cep         );
+		setCep        ( cep         );
 		setContato    ( new Contato( ) );
 	}
 
@@ -117,7 +117,7 @@ public class Endereco
 		setBairro     ( bairro      );
 		setCidade     ( cidade      );
 		setUF         ( uf          );
-		setCEP        ( cep         );
+		setCep        ( cep         );
 		setContato    ( contato     );
 	}
 	
@@ -142,7 +142,7 @@ public class Endereco
 		setBairro     ( bairro      );
 		setCidade     ( cidade      );
 		setUF         ( uf          );
-		setCEP        ( cep         );
+		setCep        ( cep         );
 	}
 
 	/* (non-Javadoc)
@@ -280,24 +280,6 @@ public class Endereco
 	public void setUF( String uf )
 	{
 		this.uf = uf;
-	}
-
-	/**
-	 * Coleta CEP.
-	 * @return CEP
-	 */
-	public String getCEP( )
-	{
-		return cep;
-	}
-
-	/**
-	 * Configura CEP.
-	 * @param cep CEP
-	 */
-	public void setCEP( String cep )
-	{
-		this.cep = cep;
 	}
 
 	/**

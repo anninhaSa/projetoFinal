@@ -39,7 +39,7 @@ public class PessoaUtil
 		cliente.getContato( ).getEndereco( ).setBairro     ( pessoa.getContato( ).getEndereco( ).getBairro     ( ) );
 		cliente.getContato( ).getEndereco( ).setCidade     ( pessoa.getContato( ).getEndereco( ).getCidade     ( ) );
 		cliente.getContato( ).getEndereco( ).setUF         ( pessoa.getContato( ).getEndereco( ).getUF         ( ) );
-		cliente.getContato( ).getEndereco( ).setCEP        ( pessoa.getContato( ).getEndereco( ).getCEP        ( ) );
+		cliente.getContato( ).getEndereco( ).setCep        ( pessoa.getContato( ).getEndereco( ).getCep        ( ) );
 		
 		//Telefone Residencial                                                                
 		cliente.getContato( ).setDddResidencial( pessoa.getContato( ).getDddResidencial( ) );
@@ -89,7 +89,7 @@ public class PessoaUtil
 		funcionario.getContato( ).getEndereco( ).setBairro     ( pessoa.getContato( ).getEndereco( ).getBairro     ( ) );
 		funcionario.getContato( ).getEndereco( ).setCidade     ( pessoa.getContato( ).getEndereco( ).getCidade     ( ) );
 		funcionario.getContato( ).getEndereco( ).setUF         ( pessoa.getContato( ).getEndereco( ).getUF         ( ) );
-		funcionario.getContato( ).getEndereco( ).setCEP        ( pessoa.getContato( ).getEndereco( ).getCEP        ( ) );
+		funcionario.getContato( ).getEndereco( ).setCep        ( pessoa.getContato( ).getEndereco( ).getCep        ( ) );
 		
 		//Telefone Residencial                                                                
 		funcionario.getContato( ).setDddResidencial( pessoa.getContato( ).getDddResidencial( ) );

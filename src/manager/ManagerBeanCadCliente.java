@@ -12,7 +12,7 @@ import persistence.ClienteDAO;
 import util.Formulario;
 import util.StatusRetorno;
 import util.Util;
-import validate.ValidaCliente;
+import validate.ValidaDadosPessoa;
 import entity.Cliente;
 
 /**
@@ -49,6 +49,123 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 		telResidencial  = "";
 		telComercial    = "";
 	}
+
+	/**
+	 * Coleta telefone comercial.
+	 * @param telComercial telefone comercial com DDD
+	 */
+	public void setTelComercial( String telComercial )
+	{
+		this.telComercial = telComercial;
+	}
+
+	@SuppressWarnings( "unchecked" )
+	public String busca( )
+	{
+		FacesContext  fc       = FacesContext.getCurrentInstance( );
+		String        msg      = "";
+		StatusRetorno sRetorno = new StatusRetorno( );
+		String        ddd      = "";
+		String        tel      = "";
+		
+		clientes = new ArrayList<Cliente>( );
+		
+		try
+		{
+			nome     = Util.trataString( nome     );
+			telefone = Util.trataString( telefone );
+			
+			if( !Util.isnEmptyOrNull( nome ) && !Util.isnEmptyOrNull( telefone ) )
+			{
+				telefone = telefone.replaceAll( "[(]", "" ).replaceAll( "[)]", "" ).replaceAll( "[-]", "" );
+				ValidaDadosPessoa.validaTelefone( telefone, sRetorno );
+				
+				if( sRetorno.isOk( ) )
+				{
+					ddd = telefone.substring( 0, 2 );
+					tel = telefone.substring( 2    );
+					
+					clientes = (new ClienteDAO( )).coletaClienteByTelefoneAndNome( ddd, tel, nome );
+				}
+			}
+			else if( !Util.isnEmptyOrNull( nome ) )
+			{
+				clientes = (new ClienteDAO( )).coletaClienteByNome( nome );
+			}
+			else if( !Util.isnEmptyOrNull( telefone ) )
+			{
+				telefone = telefone.replaceAll( "[(]", "" ).replaceAll( "[)]", "" ).replaceAll( "[-]", "" );
+				ValidaDadosPessoa.validaTelefone( telefone, sRetorno );
+				
+				if( sRetorno.isOk( ) )
+				{
+					ddd = telefone.substring( 0, 2 );
+					tel = telefone.substring( 2    );
+					
+					clientes = (new ClienteDAO( )).coletaClienteByTelefone( ddd, tel );
+				}
+				
+			}
+			else
+				clientes = (ArrayList<Cliente>) (new ClienteDAO( )).coletaTodasAsPessoas( );
+		}
+		catch( Exception ex )
+		{
+			msg = "Erro: " + ex.getMessage( );
+			ex.printStackTrace( );
+		}
+		
+		fc.addMessage( Formulario.s_strFormBuscaCliente, new FacesMessage( msg ) );
+		
+		return null;
+	}
+	
+	public String incluiCliente( )
+	{
+		FacesContext  fc       = FacesContext.getCurrentInstance( );
+		String        msg      = "";
+		ClienteDAO    cliDao   = new ClienteDAO( );
+		
+		clientes = new ArrayList<Cliente>( );
+		
+		try
+		{
+			ValidaDadosPessoa valida = new ValidaDadosPessoa( );
+			
+			valida.setDataNasc      ( getData          ( ) );
+			valida.setCelular       ( getCelular       ( ) );
+			valida.setTelResidencial( getTelResidencial( ) );
+			valida.setTelComercial  ( getTelComercial  ( ) );
+			
+			StatusRetorno sRetorno = valida.validaCliente( cliente );
+			
+			if( sRetorno.isOk( ) )
+				sRetorno.setbOk( cliDao.insereCliente( cliente ) );
+				
+			
+			if( sRetorno.isOk( ) && clientes != null )
+				clientes.add( cliente );
+			//TODO Enviar mensagem de erro ou aviso quando não for possível incluir o cliente.
+		}
+		catch( Exception ex )
+		{
+			msg = "Erro: " + ex.getMessage( );
+			ex.printStackTrace( );
+		}
+		finally
+		{
+			data           = "";
+			cliente        = new Cliente( );
+			celular        = "";
+			telComercial   = "";
+			telResidencial = "";
+		}
+		
+		fc.addMessage( Formulario.s_strFormListCliente, new FacesMessage( msg ) );
+		
+		return null;
+	}
+	
 
 	/**
 	 * Coleta os clientes
@@ -210,110 +327,5 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 	public String getTelComercial( )
 	{
 		return telComercial;
-	}
-
-	/**
-	 * Coleta telefone comercial.
-	 * @param telComercial telefone comercial com DDD
-	 */
-	public void setTelComercial( String telComercial )
-	{
-		this.telComercial = telComercial;
-	}
-
-	@SuppressWarnings( "unchecked" )
-	public String atualiza( )
-	{
-		FacesContext  fc       = FacesContext.getCurrentInstance( );
-		String        msg      = "";
-		StatusRetorno sRetorno = new StatusRetorno( );
-		String        ddd      = "";
-		String        tel      = "";
-		
-		clientes = new ArrayList<Cliente>( );
-		
-		try
-		{
-			nome     = Util.trataString( nome     );
-			telefone = Util.trataString( telefone );
-			
-			if( !Util.isnEmptyOrNull( nome ) && !Util.isnEmptyOrNull( telefone ) )
-			{
-				telefone = telefone.replaceAll( "[(]", "" ).replaceAll( "[)]", "" ).replaceAll( "[-]", "" );
-				sRetorno = ValidaCliente.validaTelefone( telefone );
-				
-				if( sRetorno.isOk( ) )
-				{
-					ddd = telefone.substring( 0, 2 );
-					tel = telefone.substring( 2    );
-					
-					clientes = (new ClienteDAO( )).coletaClienteByTelefoneAndNome( ddd, tel, nome );
-				}
-			}
-			else if( !Util.isnEmptyOrNull( nome ) )
-			{
-				clientes = (new ClienteDAO( )).coletaClienteByNome( nome );
-			}
-			else if( !Util.isnEmptyOrNull( telefone ) )
-			{
-				telefone = telefone.replaceAll( "[(]", "" ).replaceAll( "[)]", "" ).replaceAll( "[-]", "" );
-				sRetorno = ValidaCliente.validaTelefone( telefone );
-				
-				if( sRetorno.isOk( ) )
-				{
-					ddd = telefone.substring( 0, 2 );
-					tel = telefone.substring( 2    );
-					
-					clientes = (new ClienteDAO( )).coletaClienteByTelefone( ddd, tel );
-				}
-				
-			}
-			else
-				clientes = (ArrayList<Cliente>) (new ClienteDAO( )).coletaTodasAsPessoas( );
-		}
-		catch( Exception ex )
-		{
-			msg = "Erro: " + ex.getMessage( );
-			ex.printStackTrace( );
-		}
-		
-		fc.addMessage( Formulario.s_strFormBuscaCliente, new FacesMessage( msg ) );
-		
-		return null;
-	}
-	
-	public String incluiCliente( )
-	{
-		FacesContext  fc       = FacesContext.getCurrentInstance( );
-		String        msg      = "";
-		StatusRetorno sRetorno = new StatusRetorno( );
-		ClienteDAO    cliDao   = new ClienteDAO( );
-		boolean       bOk = false;
-		
-		clientes = new ArrayList<Cliente>( );
-		
-		try
-		{
-			cliente.setDataNasc( Util.trataData( data ) );
-			
-			bOk = cliDao.insereCliente( cliente );
-			
-			if( bOk && clientes != null )
-				clientes.add( cliente );
-		}
-		catch( Exception ex )
-		{
-			msg = "Erro: " + ex.getMessage( );
-			ex.printStackTrace( );
-		}
-		finally
-		{
-			data = "";
-			cliente = new Cliente( );
-		}
-		
-		fc.addMessage( Formulario.s_strFormListCliente, new FacesMessage( msg ) );
-		
-		return null;
 	}
 }
