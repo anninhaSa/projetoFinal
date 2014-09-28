@@ -39,15 +39,13 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 	 */
 	public ManagerBeanCadCliente( )
 	{
-		clientes        = new ArrayList<Cliente>( );
-		nome            = "";
-		telefone        = "";
-		cliente         = new Cliente( );
-		clienteSelected = new Cliente( );
-		data            = "";
-		celular         = "";
-		telResidencial  = "";
-		telComercial    = "";
+		setClientes       ( new ArrayList<Cliente>( ) );
+		setNome           ( ""                        );
+		setTelefone       ( ""                        );
+		setClienteSelected( new Cliente( )            );
+		setCliente        ( new Cliente( )            );
+		
+		inicializaVariaveis( );
 	}
 
 	/**
@@ -154,11 +152,9 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 		}
 		finally
 		{
-			data           = "";
-			cliente        = new Cliente( );
-			celular        = "";
-			telComercial   = "";
-			telResidencial = "";
+			cliente = new Cliente( );
+			
+			inicializaVariaveis( );
 		}
 		
 		fc.addMessage( Formulario.s_strFormListCliente, new FacesMessage( msg ) );
@@ -166,7 +162,14 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 		return null;
 	}
 	
-
+	public void inicializaVariaveis( )
+	{
+		setData          ( "" );
+		setCelular       ( "" );
+		setTelResidencial( "" );
+		setTelComercial  ( "" );
+	}
+	
 	/**
 	 * Coleta os clientes
 	 * @return {@link ArrayList} de {@link Cliente}.

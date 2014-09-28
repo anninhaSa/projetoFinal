@@ -135,8 +135,8 @@
 					<h:outputLabel value=""/>
 					<h:outputLabel value=""/>
 					<h:outputLabel value=""/>
-					<p:commandButton value="Cadastrar" action="#{mbCadCliente.incluiCliente}" 
-					update=":formCadCliente,:formListCliente" oncomplete="incDialog.hide()" ajax="true"/>
+					<p:commandButton value="Cadastrar" action="#{mbCadCliente.incluiCliente}" update=":formCadCliente,:formListCliente" 
+					                 oncomplete="incDialog.hide()" ajax="true"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
@@ -149,7 +149,7 @@
 					<h:outputLabel value="Nome"/>
 					<p:inputText id="nomeAlt" value="#{mbCadCliente.clienteSelected.nome}" size="90" readonly="true"/>
 					<h:outputLabel value="CPF"/>
-					<p:inputMask id="cpfAlt" value="#{mbCadCliente.clienteSelected.CPF}" mask="999.999.999-99" readonly="true"/>
+					<p:inputMask id="cpfAlt" value="#{mbCadCliente.clienteSelected.CPF}" readonly="true"/>
 					
 					<h:outputLabel value="email"/>
 					<p:inputText id="emailAlt" value="#{mbCadCliente.clienteSelected.contato.email}" size="70" readonly="true"/>
@@ -157,14 +157,14 @@
 					<p:inputMask id="rgAlt" value="#{mbCadCliente.clienteSelected.RG}" size="11" readonly="true"/>
 					
 					<h:outputLabel value="Tel. Res."/>
-					<p:inputMask id="telResAlt" value="#{mbCadCliente.clienteSelected.contato.telResidencial}" mask="(99)9999-9999" readonly="true"/>
+					<p:inputMask id="telResAlt" value="#{mbCadCliente.clienteSelected.contato.telResidencial}" readonly="true"/>
 					<h:outputLabel value="Cel."/>
-					<p:inputMask id="telCelAlt" value="#{mbCadCliente.clienteSelected.contato.telCelular}" mask="(99)9999-9999?9" readonly="true"/>
+					<p:inputMask id="telCelAlt" value="#{mbCadCliente.clienteSelected.contato.telCelular}" readonly="true"/>
 					
 					<h:outputLabel value="Tel. Com."/>
-					<p:inputMask id="telComAlt" value="#{mbCadCliente.clienteSelected.contato.telComercial}" mask="(99)9999-9999" readonly="true"/>
+					<p:inputMask id="telComAlt" value="#{mbCadCliente.clienteSelected.contato.telComercial}" readonly="true"/>
 					<h:outputLabel value="Dat. Nasc."/>
-					<p:inputMask id="dataNascAlt" value="#{mbCadCliente.clienteSelected.dataNasc}" mask="99/99/9999" readonly="true"/>
+					<p:inputMask id="dataNascAlt" value="#{mbCadCliente.clienteSelected.dataNasc}" readonly="true"/>
 					
 					<h:outputLabel value="Logradouro"/>
 					<p:inputText id="logradouroAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.logradouro}" size="70" readonly="true"/>
@@ -182,7 +182,7 @@
 					<p:inputText id="ufAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.uf}" size="2" readonly="true"/>
 					
 					<h:outputLabel value="CEP"/>
-					<p:inputMask id="cepAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.cep}" mask="99.999-99" size="7" readonly="true"/>
+					<p:inputMask id="cepAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.cep}" size="7" readonly="true"/>
 					<h:outputLabel value=""/>
 					<h:outputLabel value=""/>
 					
