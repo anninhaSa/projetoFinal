@@ -11,9 +11,9 @@ public class StatusRetorno
 	
 	public StatusRetorno( )
 	{
-		setMsgAviso( ""   );
-		setMsgErro ( ""   );
-		setbOk     ( true );
+		msgAviso = "";
+		msgErro  = "";
+		bOk      = true;
 	}
 
 	/**

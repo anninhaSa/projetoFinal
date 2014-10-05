@@ -48,15 +48,6 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 		inicializaVariaveis( );
 	}
 
-	/**
-	 * Coleta telefone comercial.
-	 * @param telComercial telefone comercial com DDD
-	 */
-	public void setTelComercial( String telComercial )
-	{
-		this.telComercial = telComercial;
-	}
-
 	@SuppressWarnings( "unchecked" )
 	public String busca( )
 	{
@@ -121,43 +112,75 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 	public String incluiCliente( )
 	{
 		FacesContext  fc       = FacesContext.getCurrentInstance( );
-		String        msg      = "";
 		ClienteDAO    cliDao   = new ClienteDAO( );
-		
-		clientes = new ArrayList<Cliente>( );
+		StatusRetorno sRetorno = new StatusRetorno( );
 		
 		try
 		{
 			ValidaDadosPessoa valida = new ValidaDadosPessoa( );
 			
-			valida.setDataNasc      ( getData          ( ) );
-			valida.setCelular       ( getCelular       ( ) );
-			valida.setTelResidencial( getTelResidencial( ) );
-			valida.setTelComercial  ( getTelComercial  ( ) );
+			valida.setDataNasc      ( data           );
+			valida.setCelular       ( celular        );
+			valida.setTelResidencial( telResidencial );
+			valida.setTelComercial  ( telComercial   );
 			
-			StatusRetorno sRetorno = valida.validaCliente( cliente );
+			sRetorno = valida.validaCliente( cliente );
 			
 			if( sRetorno.isOk( ) )
 				sRetorno.setbOk( cliDao.insereCliente( cliente ) );
-				
 			
-			if( sRetorno.isOk( ) && clientes != null )
-				clientes.add( cliente );
-			//TODO Enviar mensagem de erro ou aviso quando não for possível incluir o cliente.
 		}
 		catch( Exception ex )
 		{
-			msg = "Erro: " + ex.getMessage( );
 			ex.printStackTrace( );
 		}
 		finally
 		{
+			if( sRetorno.isOk( ) )
+			{
+				fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_INFO, "Inserido com sucesso", null));
+				
+				if( cliente != null && clientes != null )
+					clientes.add( cliente );
+			}
+			else
+				fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_ERROR, sRetorno.getMsgErro( ).replace("/n", "<br>"), null));
+
 			cliente = new Cliente( );
 			
 			inicializaVariaveis( );
 		}
 		
-		fc.addMessage( Formulario.s_strFormListCliente, new FacesMessage( msg ) );
+		return null;
+	}
+	
+	public String excluiCliente( )
+	{
+		ClienteDAO    cliDao   = new ClienteDAO( );
+		FacesContext  fc       = FacesContext.getCurrentInstance( );
+		
+		if( clienteSelected != null && cliDao.excluiCliente( clienteSelected ) )
+		{
+			fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente excluído com sucesso", null));
+			
+			if( clienteSelected != null && clientes != null )
+				clientes.remove( clienteSelected );
+		}
+		else
+			fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possível excluir o cliente!", null));
+		
+		return null;
+	}
+	
+	public String alteraCliente( )
+	{
+		ClienteDAO   cliDao = new ClienteDAO( );
+		FacesContext fc     = FacesContext.getCurrentInstance( );
+		
+		if( clienteSelected != null && cliDao.atualizaCliente( clienteSelected ) )
+			fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente alterado com sucesso", null));
+		else
+			fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possível alterar o cliente!", null));
 		
 		return null;
 	}
@@ -330,5 +353,14 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 	public String getTelComercial( )
 	{
 		return telComercial;
+	}
+	
+	/**
+	 * Coleta telefone comercial.
+	 * @param telComercial telefone comercial com DDD
+	 */
+	public void setTelComercial( String telComercial )
+	{
+		this.telComercial = telComercial;
 	}
 }

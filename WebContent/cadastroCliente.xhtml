@@ -44,8 +44,11 @@
 			<br/>
 			<br/>
 			<h:form id="formListCliente">
+				<p:growl id="aviso" />
 				<p:contextMenu for="dtListagemCli">
-					<p:menuitem value="Propriedades" update=":propCliente"   icon="ui-icon-search" oncomplete="propDialog.show()"/>
+					<p:menuitem value="Propriedades" update=":propCliente" icon="ui-icon-search" oncomplete="propDialog.show()"/>
+					<p:menuitem value="Exclusão" update=":propCliente" icon="ui-icon-close" oncomplete="excDialog.show()"/>
+					<p:menuitem value="Alteração" update=":propCliente" icon="ui-icon-update" oncomplete="altDialog.show()"/>
 				</p:contextMenu>
 					
 				<p:dataTable id="dtListagemCli" var="cli" value="#{mbCadCliente.clientes}" rowKey="#{cli.idPessoa}" selection="#{mbCadCliente.clienteSelected}" 
@@ -82,13 +85,13 @@
 				</p:dataTable>
 			</h:form>
 		</p:panel>		
-						                                        <!-- FORMULÁRIO DE INCLUSÃO DE CLIENTE -->
+						                                     <!-- CAIXA DE DIÁLOGO DE INCLUSÃO DE CLIENTE -->
 			
 		<p:dialog header="Cadastro de Cliente - Inclusão" widgetVar="incDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
 			<h:form id="formCadCliente">
 				<h:panelGrid columns="4">
 					<h:outputLabel value="Nome"/>
-					<p:inputText id="nomeInc" value="#{mbCadCliente.cliente.nome}" size="90" required="true"/>
+					<p:inputText id="nomeInc" value="#{mbCadCliente.cliente.nome}" size="90"/>
 					<h:outputLabel value="CPF"/>
 					<p:inputMask id="cpfInc" value="#{mbCadCliente.cliente.CPF}" mask="999.999.999-99"/>
 					
@@ -147,47 +150,112 @@
 			<p:outputPanel id="propCliente">
 				<h:panelGrid  columns="4" rendered="true">
 					<h:outputLabel value="Nome"/>
-					<p:inputText id="nomeAlt" value="#{mbCadCliente.clienteSelected.nome}" size="90" readonly="true"/>
+					<p:inputText id="nomeProp" value="#{mbCadCliente.clienteSelected.nome}" size="90" readonly="true"/>
 					<h:outputLabel value="CPF"/>
-					<p:inputMask id="cpfAlt" value="#{mbCadCliente.clienteSelected.CPF}" readonly="true"/>
+					<p:inputMask id="cpfProp" value="#{mbCadCliente.clienteSelected.CPF}" readonly="true"/>
 					
 					<h:outputLabel value="email"/>
-					<p:inputText id="emailAlt" value="#{mbCadCliente.clienteSelected.contato.email}" size="70" readonly="true"/>
+					<p:inputText id="emailProp" value="#{mbCadCliente.clienteSelected.contato.email}" size="70" readonly="true"/>
 					<h:outputLabel value="RG"/>
-					<p:inputMask id="rgAlt" value="#{mbCadCliente.clienteSelected.RG}" size="11" readonly="true"/>
+					<p:inputMask id="rgProp" value="#{mbCadCliente.clienteSelected.RG}" size="11" readonly="true"/>
 					
 					<h:outputLabel value="Tel. Res."/>
-					<p:inputMask id="telResAlt" value="#{mbCadCliente.clienteSelected.contato.telResidencial}" readonly="true"/>
+					<p:inputMask id="telResProp" value="#{mbCadCliente.clienteSelected.contato.telResidencial}" readonly="true"/>
 					<h:outputLabel value="Cel."/>
-					<p:inputMask id="telCelAlt" value="#{mbCadCliente.clienteSelected.contato.telCelular}" readonly="true"/>
+					<p:inputMask id="telCelProp" value="#{mbCadCliente.clienteSelected.contato.telCelular}" readonly="true"/>
 					
 					<h:outputLabel value="Tel. Com."/>
-					<p:inputMask id="telComAlt" value="#{mbCadCliente.clienteSelected.contato.telComercial}" readonly="true"/>
+					<p:inputMask id="telComProp" value="#{mbCadCliente.clienteSelected.contato.telComercial}" readonly="true"/>
 					<h:outputLabel value="Dat. Nasc."/>
-					<p:inputMask id="dataNascAlt" value="#{mbCadCliente.clienteSelected.dataNasc}" readonly="true"/>
+					<p:inputMask id="dataNascProp" value="#{mbCadCliente.clienteSelected.dataNasc}" readonly="true"/>
 					
 					<h:outputLabel value="Logradouro"/>
-					<p:inputText id="logradouroAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.logradouro}" size="70" readonly="true"/>
+					<p:inputText id="logradouroProp" value="#{mbCadCliente.clienteSelected.contato.endereco.logradouro}" size="70" readonly="true"/>
 					<h:outputLabel value="nº"/>
-					<p:inputText id="numeroAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.numero}" size="4" readonly="true"/>
+					<p:inputText id="numeroProp" value="#{mbCadCliente.clienteSelected.contato.endereco.numero}" size="4" readonly="true"/>
 					
 					<h:outputLabel value="Complemento"/>
-					<p:inputText id="complemAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.complemento}" size="60" readonly="true"/>
+					<p:inputText id="complemProp" value="#{mbCadCliente.clienteSelected.contato.endereco.complemento}" size="60" readonly="true"/>
 					<h:outputLabel value="Bairro"/>
-					<p:inputText id="bairroAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.bairro}" size="20" readonly="true"/>
+					<p:inputText id="bairroProp" value="#{mbCadCliente.clienteSelected.contato.endereco.bairro}" size="20" readonly="true"/>
 					
 					<h:outputLabel value="Cidade"/>
-					<p:inputText id="cidadeAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.cidade}" size="30" readonly="true"/>
+					<p:inputText id="cidadeProp" value="#{mbCadCliente.clienteSelected.contato.endereco.cidade}" size="30" readonly="true"/>
 					<h:outputLabel value="UF"/>
-					<p:inputText id="ufAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.uf}" size="2" readonly="true"/>
+					<p:inputText id="ufProp" value="#{mbCadCliente.clienteSelected.contato.endereco.uf}" size="2" readonly="true"/>
 					
 					<h:outputLabel value="CEP"/>
-					<p:inputMask id="cepAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.cep}" size="7" readonly="true"/>
+					<p:inputMask id="cepProp" value="#{mbCadCliente.clienteSelected.contato.endereco.cep}" size="7" readonly="true"/>
 					<h:outputLabel value=""/>
 					<h:outputLabel value=""/>
 					
 					<h:outputLabel value="Observação"/>
-					<p:inputTextarea id="obsAlt" value="#{mbCadCliente.clienteSelected.observacao}" readonly="true"/>
+					<p:inputTextarea id="obsProp" value="#{mbCadCliente.clienteSelected.observacao}" readonly="true"/>
+					<h:outputLabel value=""/>
+					<h:outputLabel value=""/>
+				</h:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+		
+		                                                     <!-- CAIXA DE DIÁLOGO DE EXLUSÃO -->
+		                                                     
+		<p:dialog header="Cadastro de Cliente - Exclusão" widgetVar="excDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+			<h:form id="formExcCliente">
+				<h:outputText value="Confirma a exclusão do cliente?" />
+				<h:panelGrid columns="2">
+					<p:commandButton value="Sim" action="#{mbCadCliente.excluiCliente}" update=":formCadCliente,:formListCliente" oncomplete="excDialog.hide()" ajax="true"/>
+					<p:commandButton value="Não" onclick="excDialog.hide()"/>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+		                                                 <!-- CAIXA DE DIÁLOGO DE ALTERAÇÃO -->
+				
+		<p:dialog header="Cadastro de Cliente - Alteração" widgetVar="altDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+			<p:outputPanel id="altCliente">
+				<h:panelGrid  columns="4" rendered="true">
+					<h:outputLabel value="Nome"/>
+					<p:inputText id="nomeAlt" value="#{mbCadCliente.clienteSelected.nome}" size="90"/>
+					<h:outputLabel value="CPF"/>
+					<p:inputMask id="cpfAlt" value="#{mbCadCliente.clienteSelected.CPF}"/>
+					
+					<h:outputLabel value="email"/>
+					<p:inputText id="emailAlt" value="#{mbCadCliente.clienteSelected.contato.email}" size="70"/>
+					<h:outputLabel value="RG"/>
+					<p:inputMask id="rgAlt" value="#{mbCadCliente.clienteSelected.RG}" size="11"/>
+					
+					<h:outputLabel value="Tel. Res."/>
+					<p:inputMask id="telResAlt" value="#{mbCadCliente.clienteSelected.contato.telResidencial}"/>
+					<h:outputLabel value="Cel."/>
+					<p:inputMask id="telCelAlt" value="#{mbCadCliente.clienteSelected.contato.telCelular}"/>
+					
+					<h:outputLabel value="Tel. Com."/>
+					<p:inputMask id="telComAlt" value="#{mbCadCliente.clienteSelected.contato.telComercial}"/>
+					<h:outputLabel value="Dat. Nasc."/>
+					<p:inputMask id="dataNascAlt" value="#{mbCadCliente.clienteSelected.dataNasc}"/>
+					
+					<h:outputLabel value="Logradouro"/>
+					<p:inputText id="logradouroAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.logradouro}" size="70"/>
+					<h:outputLabel value="nº"/>
+					<p:inputText id="numeroAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.numero}" size="4"/>
+					
+					<h:outputLabel value="Complemento"/>
+					<p:inputText id="complemAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.complemento}" size="60"/>
+					<h:outputLabel value="Bairro"/>
+					<p:inputText id="bairroAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.bairro}" size="20"/>
+					
+					<h:outputLabel value="Cidade"/>
+					<p:inputText id="cidadeAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.cidade}" size="30"/>
+					<h:outputLabel value="UF"/>
+					<p:inputText id="ufAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.uf}" size="2"/>
+					
+					<h:outputLabel value="CEP"/>
+					<p:inputMask id="cepAlt" value="#{mbCadCliente.clienteSelected.contato.endereco.cep}" size="7"/>
+					<h:outputLabel value=""/>
+					<h:outputLabel value=""/>
+					
+					<h:outputLabel value="Observação"/>
+					<p:inputTextarea id="obsAlt" value="#{mbCadCliente.clienteSelected.observacao}"/>
 					<h:outputLabel value=""/>
 					<h:outputLabel value=""/>
 				</h:panelGrid>

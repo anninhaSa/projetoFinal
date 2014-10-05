@@ -25,9 +25,7 @@ public class Util
 	 */
 	public static boolean isnEmptyOrNull( String str )
 	{
-		boolean bEmptyOrNul = str == null || str.isEmpty( );
-		
-		return bEmptyOrNul;
+		return str == null || str.isEmpty( );
 	}
 	
 	/**
