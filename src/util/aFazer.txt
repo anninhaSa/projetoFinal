@@ -4,5 +4,14 @@ FAZER JUNIT                                                                     
 3. Validar entradas/saídas na tela de consulta do cliente para evitar exception.             ok
 4. Construir menu da tela de cadastro do cliente                                             ok
 5. Construir tela do cadastro de cliente                                                     ok
-6. Fazer testes da validação de cliente
-7. Enviar mensagem de erro ou aviso quando não for possível incluir o cliente.
+6. Fazer testes da validação de cliente                                                      ok
+7. Enviar mensagem de erro ou aviso quando não for possível incluir o cliente.               ok
+8. Ao tentar alterar um campo que não tenha todos os campos preenchidos (Ex. Endereço), ao
+tentar exibir a tela é lançada uma exception.
+9. Campo de Observação é redimensionado conforme a inclusão de caracteres.
+10. A data de nascimento está sendo cadastrada com a data atual do sistema
+11. Limpar campos da tela de inclusão ao fechar a tela pelo "x"
+12. Formatar data de nascimento e telefones das telas de propriedades e alteração.
+13. Alinhar botão de "ok" a esquerda
+14. O "grow" é exibido ao iniciar a tela de cadastro de cliente mesmo que não haja msg.
+14. Testar listview sem data de nascimento preenchida 

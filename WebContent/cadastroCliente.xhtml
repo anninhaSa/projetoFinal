@@ -52,7 +52,7 @@
 				</p:contextMenu>
 					
 				<p:dataTable id="dtListagemCli" var="cli" value="#{mbCadCliente.clientes}" rowKey="#{cli.idPessoa}" selection="#{mbCadCliente.clienteSelected}" 
-				             selectionMode="single">
+				             selectionMode="single" paginator="true" rows="15">
 				    <p:column styleClass="dtNome">
 				        <f:facet name="header">
 				            <h:outputText value="Nome" />
@@ -71,7 +71,7 @@
 				        <f:facet name="header">
 				            <h:outputText value="Data de Nascimento" />
 				        </f:facet>
-				        <h:outputText value="#{cli.dataNasc}">
+				        <h:outputText value="#{cli.dataNasc}" rendered="#{not empty cli.dataNasc}">
 				        	<f:convertDateTime value="dd/mm/yyyy"/>
 				        </h:outputText>
 				    </p:column>
