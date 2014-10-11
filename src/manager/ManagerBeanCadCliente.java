@@ -141,7 +141,10 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 				fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_INFO, "Inserido com sucesso", null));
 				
 				if( cliente != null && clientes != null )
+				{
+					cliente = cliDao.coletaClienteById(cliente.getIdPessoa( ));
 					clientes.add( cliente );
+				}
 			}
 			else
 				fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_ERROR, sRetorno.getMsgErro( ).replace("/n", "<br>"), null));
