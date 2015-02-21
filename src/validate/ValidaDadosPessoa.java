@@ -12,16 +12,10 @@ import util.Util;
 public class ValidaDadosPessoa
 {
 	private String dataNasc;
-	private String celular;
-	private String telResidencial;
-	private String telComercial;
 	
 	public ValidaDadosPessoa( )
 	{
 		setDataNasc      ( "" );
-		setCelular       ( "" );
-		setTelResidencial( "" );
-		setTelComercial  ( "" );
 	}
 	
 	public StatusRetorno validaCliente( Cliente cliente )
@@ -143,27 +137,23 @@ public class ValidaDadosPessoa
 	
 	public void validaEAjustaContato( Cliente cliente, StatusRetorno sRet )
 	{
-		if( Util.isnEmptyOrNull( getCelular( true ) ) && Util.isnEmptyOrNull( getTelResidencial( true ) ) && Util.isnEmptyOrNull( getTelComercial( true ) ) )
+		if( Util.isnEmptyOrNull( cliente.getContato( ).getTelCelular    ( ) ) &&
+			Util.isnEmptyOrNull( cliente.getContato( ).getTelResidencial( ) ) &&
+			Util.isnEmptyOrNull( cliente.getContato( ).getTelComercial  ( ) ) )
 			sRet.setMsgErro( "Pelo menos um telefone deve ser informado!" );
 		else
 		{
-			if( !Util.isnEmptyOrNull( getCelular( true ) ) && validaTelefone( getCelular( true ), sRet ) )
-			{
-				cliente.getContato( ).setDddCelular( getCelular( true ).substring( 0, 2 ) );
-				cliente.getContato( ).setTelCelular( getCelular( true ).substring( 2    ) );
-			}
+			if( !Util.isnEmptyOrNull( cliente.getContato( ).getTelCelular( ) ) &&
+				validaTelefone( cliente.getContato( ).getTelCelular( ), sRet ) )
+				cliente.getContato( ).setTelCelular( cliente.getContato( ).getTelCelular( ).replaceAll( "[(]", "" ).replaceAll( "[)]", "" ).replaceAll( "[-]", "" ) );
 			
-			if( !Util.isnEmptyOrNull( getTelResidencial( true ) ) && validaTelefone( getTelResidencial( true ), sRet ) )
-			{
-				cliente.getContato( ).setDddResidencial( getTelResidencial( true ).substring( 0, 2 ) );
-				cliente.getContato( ).setTelResidencial( getTelResidencial( true ).substring( 2    ) );
-			}
+			if( !Util.isnEmptyOrNull( cliente.getContato( ).getTelResidencial( ) ) &&
+				validaTelefone( cliente.getContato( ).getTelResidencial( ), sRet ) )
+				cliente.getContato( ).setTelResidencial( cliente.getContato( ).getTelResidencial( ).replaceAll( "[(]", "" ).replaceAll( "[)]", "" ).replaceAll( "[-]", "" ) );
 			
-			if( !Util.isnEmptyOrNull( getTelComercial( true ) ) && validaTelefone( getTelComercial( true ), sRet ) )
-			{
-				cliente.getContato( ).setDddComercial( getTelComercial( true ).substring( 0, 2 ) );
-				cliente.getContato( ).setTelComercial( getTelComercial( true ).substring( 2    ) );
-			}
+			if( !Util.isnEmptyOrNull( cliente.getContato( ).getTelComercial( ) ) &&
+				validaTelefone( cliente.getContato( ).getTelComercial( ), sRet ) )
+				cliente.getContato( ).setTelComercial( cliente.getContato( ).getTelComercial( ).replaceAll( "[(]", "" ).replaceAll( "[)]", "" ).replaceAll( "[-]", "" ) );
 		}
 		
 		//Valida email
@@ -194,6 +184,8 @@ public class ValidaDadosPessoa
 		
 		if( Util.isnEmptyOrNull( telefone ) )
 			return true;
+		
+		telefone = telefone.replaceAll( "[(]", "" ).replaceAll( "[)]", "" ).replaceAll( "[-]", "" );
 		
 		// Verifica se o telefone é constituído por números no formato "ddd" + "telefone"
 		if( !( telefone.matches( "[0-9]{10}" ) || telefone.matches( "[0-9]{11}" ) ) )
@@ -229,41 +221,5 @@ public class ValidaDadosPessoa
 	public void setDataNasc( String dataNasc )
 	{
 		this.dataNasc = dataNasc;
-	}
-
-	public String getCelular( boolean bSomenteNumeros )
-	{
-		String strNumTel = !Util.isnEmptyOrNull( celular ) ? celular.replaceAll( "[(]", "" ).replaceAll( "[)]", "" ).replaceAll( "[-]", "" ) : celular;
-		
-		return bSomenteNumeros ? strNumTel : celular;
-	}
-
-	public void setCelular( String celular )
-	{
-		this.celular = celular;
-	}
-
-	public String getTelResidencial( boolean bSomenteNumeros )
-	{
-		String strNumTel = !Util.isnEmptyOrNull( telResidencial ) ? telResidencial.replaceAll( "[(]", "" ).replaceAll( "[)]", "" ).replaceAll( "[-]", "" ) : telResidencial;
-				
-		return bSomenteNumeros ? strNumTel : telResidencial;
-	}
-
-	public void setTelResidencial( String telResidencial )
-	{
-		this.telResidencial = telResidencial;
-	}
-
-	public String getTelComercial( boolean bSomenteNumeros )
-	{
-		String strNumTel = !Util.isnEmptyOrNull( telComercial ) ? telComercial.replaceAll( "[(]", "" ).replaceAll( "[)]", "" ).replaceAll( "[-]", "" ) : telComercial;
-				
-		return bSomenteNumeros ? strNumTel : telComercial;
-	}
-
-	public void setTelComercial( String telComercial )
-	{
-		this.telComercial = telComercial;
 	}
 }

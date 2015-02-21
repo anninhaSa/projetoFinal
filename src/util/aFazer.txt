@@ -14,4 +14,6 @@ tentar exibir a tela é lançada uma exception.
 12. Formatar data de nascimento e telefones das telas de propriedades e alteração.
 13. Alinhar botão de "ok" a esquerda
 14. O "grow" é exibido ao iniciar a tela de cadastro de cliente mesmo que não haja msg.
-14. Testar listview sem data de nascimento preenchida 
+14. Testar listview sem data de nascimento preenchida
+15. Ordenar as queries de cliente por nome.
+16. Tratar campos de telefone e data nas telas de inclusão, alteração e propriedades. 

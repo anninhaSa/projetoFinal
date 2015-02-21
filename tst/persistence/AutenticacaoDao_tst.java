@@ -12,7 +12,7 @@ public class AutenticacaoDao_tst extends TestCase
 	@Test
 	public void testInsereAutenticacao( )
 	{
-		Funcionario  f   = (Funcionario)(new FuncionarioDAO( )).coletaPessoaByCelular("21", "996936801").get(0);
+		Funcionario  f   = (Funcionario)(new FuncionarioDAO( )).coletaPessoaByTelefone("21996936801").get(0);
 		Autenticacao a   = new Autenticacao( "daisy", "daisy", f );
 		boolean      bOk = (new AutenticacaoDao( )).insereAutenticacao( a );
 		

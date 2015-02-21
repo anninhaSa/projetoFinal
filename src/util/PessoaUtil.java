@@ -42,15 +42,12 @@ public class PessoaUtil
 		cliente.getContato( ).getEndereco( ).setCep        ( pessoa.getContato( ).getEndereco( ).getCep        ( ) );
 		
 		//Telefone Residencial                                                                
-		cliente.getContato( ).setDddResidencial( pessoa.getContato( ).getDddResidencial( ) );
 		cliente.getContato( ).setTelResidencial( pessoa.getContato( ).getTelResidencial( ) );
 		
 		//Telefone Comercial                                                                
-		cliente.getContato( ).setDddComercial( pessoa.getContato( ).getDddComercial( ) );
 		cliente.getContato( ).setTelComercial( pessoa.getContato( ).getTelComercial( ) );
 		
 		//Celular                                                                    
-		cliente.getContato( ).setDddCelular( pessoa.getContato( ).getDddCelular( ) );
 		cliente.getContato( ).setTelCelular( pessoa.getContato( ).getTelCelular( ) );
 		
 		return cliente;
@@ -92,15 +89,12 @@ public class PessoaUtil
 		funcionario.getContato( ).getEndereco( ).setCep        ( pessoa.getContato( ).getEndereco( ).getCep        ( ) );
 		
 		//Telefone Residencial                                                                
-		funcionario.getContato( ).setDddResidencial( pessoa.getContato( ).getDddResidencial( ) );
 		funcionario.getContato( ).setTelResidencial( pessoa.getContato( ).getTelResidencial( ) );
 		
 		//Telefone Comercial                                                                
-		funcionario.getContato( ).setDddComercial( pessoa.getContato( ).getDddComercial( ) );
 		funcionario.getContato( ).setTelComercial( pessoa.getContato( ).getTelComercial( ) );
 		
 		//Celular                                                                    
-		funcionario.getContato( ).setDddCelular( pessoa.getContato( ).getDddCelular( ) );
 		funcionario.getContato( ).setTelCelular( pessoa.getContato( ).getTelCelular( ) );
 		
 		return funcionario;

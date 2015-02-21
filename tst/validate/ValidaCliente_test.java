@@ -68,7 +68,7 @@ public class ValidaCliente_test extends TestCase{
 	public Cliente coletaClienteValido( ) {
 		Cliente c = new Cliente( "Anna", Util.trataData("03/11/1986"), null, "076.799.177-01" );
 		
-		c.setContato( new Contato( "annasa03@gmail.com.br", null, null, null, null, null, null, null ) ); 
+		c.setContato( new Contato( "annasa03@gmail.com.br", null, null, null, null ) ); 
 		
 		// É necessário adicionar o contato na pessoa e depois a pessoa no contato. Se isso não for feito o idPessoa do contato será NULL pois a pessoa do contato está NULL.
 		c.getContato( ).setPessoa( c );
@@ -76,14 +76,11 @@ public class ValidaCliente_test extends TestCase{
 		c.getContato( ).setEndereco( new Endereco( "Rua do Coelho", 773, "casa 3", "Baldeador", "Niterói", "RJ", "24140050" ) );
 		c.getContato( ).getEndereco( ).setContato( c.getContato( ) );
 		
-		c.getContato( ).setDddResidencial( "21"       );
-		c.getContato( ).setTelResidencial( "26252115" );
+		c.getContato( ).setTelResidencial( "2126252115" );
 
-		c.getContato( ).setDddComercial( "21"       );
-		c.getContato( ).setTelComercial( "32335200" );
+		c.getContato( ).setTelComercial( "2132335200" );
 
-		c.getContato( ).setDddCelular( "21"        );
-		c.getContato( ).setTelCelular( "995582559" );
+		c.getContato( ).setTelCelular( "21995582559" );
 		
 		return c;
 	}

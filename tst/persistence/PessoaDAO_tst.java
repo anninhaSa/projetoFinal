@@ -26,7 +26,7 @@ public class PessoaDAO_tst {
 	@Test
 	public void testColetaPessoaByCelular( )
 	{
-		ArrayList<Cliente> ac = (ArrayList<Cliente>) ( new ClienteDAO( ) ).coletaPessoaByCelular("21", "995582559" );
+		ArrayList<Cliente> ac = (ArrayList<Cliente>) ( new ClienteDAO( ) ).coletaPessoaByTelefone("21995582559" );
 		
 		for( Cliente obj : ac )
 			System.out.println( obj );
@@ -38,7 +38,7 @@ public class PessoaDAO_tst {
 	@Test
 	public void testColetaPessoaByNomeAndCelular( )
 	{
-		ArrayList<Cliente> ac = (ArrayList<Cliente>) ( new ClienteDAO( ) ).coletaPessoaByNomeAndCelular( "Anna", "21", "995582559" );
+		ArrayList<Cliente> ac = (ArrayList<Cliente>) ( new ClienteDAO( ) ).coletaPessoaByNomeAndCelular( "Anna", "21995582559" );
 		
 		for( Cliente obj : ac )
 			System.out.println( obj );

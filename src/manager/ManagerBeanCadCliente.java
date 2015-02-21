@@ -54,8 +54,6 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 		FacesContext  fc       = FacesContext.getCurrentInstance( );
 		String        msg      = "";
 		StatusRetorno sRetorno = new StatusRetorno( );
-		String        ddd      = "";
-		String        tel      = "";
 		
 		clientes = new ArrayList<Cliente>( );
 		
@@ -70,12 +68,7 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 				ValidaDadosPessoa.validaTelefone( telefone, sRetorno );
 				
 				if( sRetorno.isOk( ) )
-				{
-					ddd = telefone.substring( 0, 2 );
-					tel = telefone.substring( 2    );
-					
-					clientes = (new ClienteDAO( )).coletaClienteByTelefoneAndNome( ddd, tel, nome );
-				}
+					clientes = (new ClienteDAO( )).coletaClienteByTelefoneAndNome( telefone, nome );
 			}
 			else if( !Util.isnEmptyOrNull( nome ) )
 			{
@@ -87,13 +80,7 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 				ValidaDadosPessoa.validaTelefone( telefone, sRetorno );
 				
 				if( sRetorno.isOk( ) )
-				{
-					ddd = telefone.substring( 0, 2 );
-					tel = telefone.substring( 2    );
-					
-					clientes = (new ClienteDAO( )).coletaClienteByTelefone( ddd, tel );
-				}
-				
+					clientes = (new ClienteDAO( )).coletaClienteByTelefone( telefone );
 			}
 			else
 				clientes = (ArrayList<Cliente>) (new ClienteDAO( )).coletaTodasAsPessoas( );
@@ -119,10 +106,7 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 		{
 			ValidaDadosPessoa valida = new ValidaDadosPessoa( );
 			
-			valida.setDataNasc      ( data           );
-			valida.setCelular       ( celular        );
-			valida.setTelResidencial( telResidencial );
-			valida.setTelComercial  ( telComercial   );
+			valida.setDataNasc( data );
 			
 			sRetorno = valida.validaCliente( cliente );
 			
@@ -177,13 +161,24 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 	
 	public String alteraCliente( )
 	{
-		ClienteDAO   cliDao = new ClienteDAO( );
-		FacesContext fc     = FacesContext.getCurrentInstance( );
+		ClienteDAO        cliDao = new ClienteDAO( );
+		FacesContext      fc     = FacesContext.getCurrentInstance( );
+		ValidaDadosPessoa valida = new ValidaDadosPessoa( );
+		String            msg    = "";
 		
-		if( clienteSelected != null && cliDao.atualizaCliente( clienteSelected ) )
-			fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente alterado com sucesso", null));
+		if( clienteSelected != null )
+		{
+			StatusRetorno sRetorno = valida.validaCliente(clienteSelected);
+			
+			if( sRetorno.isOk( ) && cliDao.atualizaCliente( clienteSelected ) )
+				msg = "Cliente alterado com sucesso!";
+			else
+				msg = sRetorno.getMsgErro( ).replaceAll( "\n", "<br>" );
+		}
 		else
-			fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possível alterar o cliente!", null));
+			msg = "Não foi possível alterar o cliente!";
+		
+		fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null));
 		
 		return null;
 	}

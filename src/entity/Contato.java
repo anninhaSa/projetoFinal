@@ -25,22 +25,13 @@ public class Contato
 	@GeneratedValue( generator = "seq_contato" )
 	private Integer idContato;
 	
-	@Column( length = 2 )
-	private String dddCelular;
-	
-	@Column( length = 9 )
+	@Column( length = 11 )
 	private String telCelular;
 	
-	@Column( length = 2 )
-	private String dddComercial;
-	
-	@Column( length = 9 )
+	@Column( length = 10 )
 	private String telComercial;
 	
-	@Column( length = 2 )
-	private String dddResidencial;
-	
-	@Column( length = 9 )
+	@Column( length = 10 )
 	private String telResidencial;
 	
 	@Column( length = 70 )
@@ -65,11 +56,8 @@ public class Contato
 	public Contato( )
 	{
 		setIdContato     ( 0               );
-		setDddCelular    ( ""              );
 		setTelCelular    ( ""              );
-		setDddComercial  ( ""              );
 		setTelComercial  ( ""              );
-		setDddResidencial( ""              );
 		setTelResidencial( ""              );
 		setEmail         ( ""              );
 		setEndereco      ( new Endereco( ) );
@@ -78,23 +66,16 @@ public class Contato
 	/**
 	 * Construtor da classe {@link Contato} com os atributos DA CLASSE parametrizados.
 	 * @param idContato código identificador do contato
-	 * @param dddCel ddd do celular
 	 * @param telCelular telefone celular
-	 * @param dddComercial ddd comercial
 	 * @param telComercial telefone comercial
-	 * @param dddResidencial ddd residencial
 	 * @param telResidencial telefone residencial
 	 * @param email email
 	 */
-	public Contato( Integer idContato,      String dddCelular,     String telCelular, String dddComercial, String telComercial,
-			        String  dddResidencial, String telResidencial, String email )
+	public Contato( Integer idContato, String telCelular, String telComercial, String telResidencial, String email )
 	{
 		setIdContato     ( idContato       );
-		setDddCelular    ( dddCelular      );
 		setTelCelular    ( telCelular      );
-		setDddComercial  ( dddComercial    );
 		setTelComercial  ( telComercial    );
-		setDddResidencial( dddResidencial  );
 		setTelResidencial( telResidencial  );
 		setEmail         ( email           );
 		setEndereco      ( new Endereco( ) );
@@ -108,25 +89,18 @@ public class Contato
 	 * @param email email
 	 * @param pessoa {@link Pessoa}
 	 * @param endereco {@link Endereco}
-	 * @param dddCel ddd do celular
 	 * @param telCelular telefone celular
-	 * @param dddComercial ddd comercial
 	 * @param telComercial telefone comercial
-	 * @param dddResidencial ddd residencial
 	 * @param telResidencial telefone residencial
 	 */
-	public Contato( Integer idContato,    String email,        Pessoa pessoa,         Endereco endereco, String dddCelular, String telCelular,
-			        String  dddComercial, String telComercial, String dddResidencial, String   telResidencial )
+	public Contato( Integer idContato, String email, Pessoa pessoa, Endereco endereco, String telCelular, String telComercial, String telResidencial )
 	{
 		setIdContato     ( idContato      );
 		setEmail         ( email          );
 		setPessoa        ( pessoa         );
 		setEndereco      ( endereco       );
-		setDddCelular    ( dddCelular     );
 		setTelCelular    ( telCelular     );
-		setDddComercial  ( dddComercial   );
 		setTelComercial  ( telComercial   );
-		setDddResidencial( dddResidencial );
 		setTelResidencial( telResidencial );
 	}
 	
@@ -134,23 +108,16 @@ public class Contato
 	 * Construtor da classe {@link Contato}.
 	 * @param email email
 	 * @param endereco {@link Endereco}
-	 * @param dddCel ddd do celular
 	 * @param telCelular telefone celular
-	 * @param dddComercial ddd comercial
 	 * @param telComercial telefone comercial
-	 * @param dddResidencial ddd residencial
 	 * @param telResidencial telefone residencial
 	 */
-	public Contato( String email,        Endereco endereco,       String dddCelular, String telCelular, String dddComercial, 
-			        String telComercial, String   dddResidencial, String telResidencial )
+	public Contato( String email, Endereco endereco, String telCelular, String telComercial, String telResidencial )
 	{
 		setEmail         ( email          );
 		setEndereco      ( endereco       );
-		setDddCelular    ( dddCelular     );
 		setTelCelular    ( telCelular     );
-		setDddComercial  ( dddComercial   );
 		setTelComercial  ( telComercial   );
-		setDddResidencial( dddResidencial );
 		setTelResidencial( telResidencial );
 	}
 	
@@ -159,9 +126,8 @@ public class Contato
 	 */
 	public String toString( )
 	{
-		return "Contato [idContato=" + idContato      + ", dddCelular="   + dddCelular   + ", telCelular="     + telCelular     +
-				", dddComercial="    + dddComercial   + ", telComercial=" + telComercial + ", dddResidencial=" + dddResidencial +
-				", telResidencial="  + telResidencial + ", email="        + email        + ", endereco="       + endereco       + "]";
+		return "Contato [idContato=" + idContato      + ", telCelular=" + telCelular + ", telComercial=" + telComercial +
+				", telResidencial="  + telResidencial + ", email="      + email      + ", endereco="     + endereco     + "]";
 	}
 
 	/**
@@ -183,24 +149,6 @@ public class Contato
 	}
 
 	/**
-	 * Coleta o ddd do celular
-	 * @return ddd do celular
-	 */
-	public String getDddCelular( )
-	{
-		return dddCelular;
-	}
-
-	/**
-	 * Configura o ddd do celular
-	 * @param dddCelular ddd do celular
-	 */
-	public void setDddCelular( String dddCelular )
-	{
-		this.dddCelular = dddCelular;
-	}
-
-	/**
 	 * Coleta o telefone celular
 	 * @return telefone celular
 	 */
@@ -219,24 +167,6 @@ public class Contato
 	}
 
 	/**
-	 * Coleta o ddd comercial
-	 * @return ddd comercial
-	 */
-	public String getDddComercial( )
-	{
-		return dddComercial;
-	}
-
-	/**
-	 * Configura o ddd comercial
-	 * @param dddComercial ddd comercial
-	 */
-	public void setDddComercial( String dddComercial )
-	{
-		this.dddComercial = dddComercial;
-	}
-
-	/**
 	 * Coleta o telefone comercial
 	 * @return telefone comercial
 	 */
@@ -252,24 +182,6 @@ public class Contato
 	public void setTelComercial( String telComercial )
 	{
 		this.telComercial = telComercial;
-	}
-
-	/**
-	 * Coleta o ddd residencial
-	 * @return ddd residencial
-	 */
-	public String getDddResidencial( )
-	{
-		return dddResidencial;
-	}
-
-	/**
-	 * Configura o ddd residencial
-	 * @param dddResidencial ddd residencial
-	 */
-	public void setDddResidencial( String dddResidencial )
-	{
-		this.dddResidencial = dddResidencial;
 	}
 
 	/**

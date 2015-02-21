@@ -20,7 +20,7 @@ public class FuncionarioDAO_tst extends TestCase
 		
 		FuncionarioDAO fd = new FuncionarioDAO( );
 		
-		f.setContato( new Contato( "daisysa@outlook.com", null, null, null, null, null, null, null ) );
+		f.setContato( new Contato( "daisysa@outlook.com", null, null, null, null ) );
 		
 		// É necessário adicionar o contato na pessoa e depois a pessoa no contato. Se isso não for feito o idPessoa do contato será NULL pois a pessoa do contato está NULL.
 		f.getContato( ).setPessoa( f );
@@ -28,14 +28,11 @@ public class FuncionarioDAO_tst extends TestCase
 		f.getContato( ).setEndereco( new Endereco( "Rua do Coelho", 773, "casa 3", "Baldeador", "Niterói", "RJ", "24140050" ) );
 		f.getContato( ).getEndereco( ).setContato( f.getContato( ) );
 		
-		f.getContato( ).setDddResidencial( "21"       );
-		f.getContato( ).setTelResidencial( "26252115" );
+		f.getContato( ).setTelResidencial( "2126252115" );
 		
-		f.getContato( ).setDddComercial( "21"       );
-		f.getContato( ).setTelComercial( "22247133" );
+		f.getContato( ).setTelComercial( "2122247133" );
 		
-		f.getContato( ).setDddCelular( "21"        );
-		f.getContato( ).setTelCelular( "996936801" );
+		f.getContato( ).setTelCelular( "21996936801" );
 		
 		boolean bOk = fd.insereFuncionario( f );
 		

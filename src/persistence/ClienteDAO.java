@@ -146,12 +146,11 @@ public class ClienteDAO extends PessoaDAO
 	
 	/**
 	 * Coleta todos os clientes que possuam o telefone parametrizado.
-	 * @param ddd ddd do cliente
 	 * @param telefone telefone
 	 * @return {@link ArrayList} de {@link Cliente}.
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Cliente> coletaClienteByTelefone( String ddd, String telefone )
+	public ArrayList<Cliente> coletaClienteByTelefone( String telefone )
 	{
 		ArrayList<Cliente> listCliente = new ArrayList<Cliente>( );
 		
@@ -159,20 +158,14 @@ public class ClienteDAO extends PessoaDAO
 			return listCliente;
 		
 		session = HibernateUtil.getSessionFactory( ).openSession( );
-		query   = session.createQuery( "  from Cliente c                                       \n" +
-		                               " where (   (    c.contato.dddCelular     like :param1  \n" +
-				                       "            and c.contato.telCelular     like :param2) \n" +
-		                               "        or (    c.contato.dddComercial   like :param3  \n" +
-				                       "            and c.contato.telComercial   like :param4) \n" +
-		                               "        or (    c.contato.dddResidencial like :param5  \n" +
-		                               "            and c.contato.telResidencial like :param6))" );
+		query   = session.createQuery( "  from Cliente c                             \n" +
+		                               " where c.contato.telCelular     like :param1 \n" +
+		                               "    or c.contato.telComercial   like :param2 \n" +
+		                               "    or c.contato.telResidencial like :param3" );
 		
-		query.setString( "param1", ddd     .trim( ) );
+		query.setString( "param1", telefone.trim( ) );
 		query.setString( "param2", telefone.trim( ) );
-		query.setString( "param3", ddd     .trim( ) );
-		query.setString( "param4", telefone.trim( ) );
-		query.setString( "param5", ddd     .trim( ) );
-		query.setString( "param6", telefone.trim( ) );
+		query.setString( "param3", telefone.trim( ) );
 		
 		listCliente = (ArrayList<Cliente>)query.list( );
 		
@@ -183,13 +176,12 @@ public class ClienteDAO extends PessoaDAO
 	
 	/**
 	 * Coleta todos os clientes que possuam o telefone e o nome parametrizados.
-	 * @param ddd ddd do cliente
 	 * @param telefone telefone do cliente
 	 * @param nome nome do cliente
 	 * @return {@link ArrayList} de {@link Cliente}.
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Cliente> coletaClienteByTelefoneAndNome( String ddd, String telefone, String nome )
+	public ArrayList<Cliente> coletaClienteByTelefoneAndNome( String telefone, String nome )
 	{
 		ArrayList<Cliente> listCliente = new ArrayList<Cliente>( );
 		
@@ -197,21 +189,15 @@ public class ClienteDAO extends PessoaDAO
 			return listCliente;
 		
 		session = HibernateUtil.getSessionFactory( ).openSession( );
-		query   = session.createQuery( "  from Cliente c                                        \n" +
-		                               " where (   (    c.contato.dddCelular     like :param1   \n" +
-		                               "            and c.contato.telCelular     like :param2)  \n" +
-		                               "        or (    c.contato.dddComercial   like :param3   \n" +
-		                               "            and c.contato.telComercial   like :param4)  \n" +
-		                               "        or (    c.contato.dddResidencial like :param5   \n" +
-		                               "            and c.contato.telResidencial like :param6)) \n" +
+		query   = session.createQuery( "  from Cliente c                                  \n" +
+		                               " where (   c.contato.telCelular     like :param1  \n" +
+		                               "        or c.contato.telComercial   like :param2  \n" +
+		                               "        or c.contato.telResidencial like :param3) \n" +
 		                               "   and upper(c.nome) like '" + nome.trim( ).toUpperCase( ) + "%' " );
 		
-		query.setString( "param1", ddd     .trim( ) );
+		query.setString( "param1", telefone.trim( ) );
 		query.setString( "param2", telefone.trim( ) );
-		query.setString( "param3", ddd     .trim( ) );
-		query.setString( "param4", telefone.trim( ) );
-		query.setString( "param5", ddd     .trim( ) );
-		query.setString( "param6", telefone.trim( ) );
+		query.setString( "param3", telefone.trim( ) );
 		
 		listCliente = (ArrayList<Cliente>)query.list( );
 		

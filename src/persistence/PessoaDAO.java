@@ -23,16 +23,14 @@ public class PessoaDAO extends DAO
 	}
 	
 	/**
-	 * Coleta a(s) {@link Pessoa}(s) a partir do celular.
-	 * @param ddd ddd do celular
-	 * @param celular número do celular
+	 * Coleta a(s) {@link Pessoa}(s) a partir do telefone.
+	 * @param celular ddd + número do celular
 	 * @return {@link ArrayList} de {@link Pessoa}, {@link Cliente} ou {@link Funcionario}.
 	 */
-	public ArrayList<?> coletaPessoaByCelular( String ddd, String celular )
+	public ArrayList<?> coletaPessoaByTelefone( String celular )
 	{
 		String strWhere = 
-		    "  WHERE c.dddCelular = '" + ddd     + "' \n" +
-			"    AND c.telCelular = '" + celular + "' ";
+		    "  WHERE c.telCelular = '" + celular + "' ";
 		
 		return coletaPessoa( strWhere );
 	}
@@ -40,15 +38,13 @@ public class PessoaDAO extends DAO
 	/**
 	 * Coleta {@link Pessoa}(s) a partir do nome e do celular.
 	 * @param nome nome da pessoa
-	 * @param ddd ddd do celular
-	 * @param celular número do celular
+	 * @param celular ddd + número do celular
 	 * @return {@link ArrayList} de {@link Pessoa}, {@link Cliente} ou {@link Funcionario}.
 	 */
-	public ArrayList<?> coletaPessoaByNomeAndCelular( String nome, String ddd, String celular )
+	public ArrayList<?> coletaPessoaByNomeAndCelular( String nome, String celular )
 	{
 		String strWhere = 
 		    "  WHERE UPPER(p.nome) like '" + nome.toUpperCase( ) + "%' \n" +
-		    "    AND c.dddCelular  =    '" + ddd                 + "'  \n" +
 		    "    AND c.telCelular  =    '" + celular             + "' ";
 		
 		return coletaPessoa( strWhere );
@@ -88,20 +84,19 @@ public class PessoaDAO extends DAO
 			open( );
 			
 			ps = con.prepareStatement(
-			    " SELECT p.idpessoa       idPessoa,       p.nome           nome,           p.dataNasc     dataNasc,     \n" +
-			    "        p.cpf            cpf,            p.rg             rg,             p.tpPessoa     tpPessoa,     \n" +
-			    "        c.idContato      idContato,      c.email          email,          c.dddCelular   dddCelular,   \n" +
-			    "        c.telCelular     telCelular,     c.dddComercial   dddComercial,   c.telComercial telComercial, \n" +
-			    "        c.dddResidencial dddResidencial, c.telResidencial telResidencial, e.idEndereco   idEndereco,   \n" +
-			    "        e.logradouro     logradouro,     e.numero         numero,         e.complemento  complemento,  \n" +
-			    "        e.bairro         bairro,         e.cidade         cidade,         e.uf           uf,           \n" +
-			    "        e.cep            cep                                                                           \n" +
-			    strClienteCampo                                                                                             +
-			    "   FROM pessoa p                                                                                       \n" +
-			    "   LEFT JOIN contato  c ON p.idpessoa  = c.id_pessoa                                                   \n" +
-			    "   LEFT JOIN endereco e ON c.idcontato = e.id_contato                                                  \n" +
-			    strClienteJoin                                                                                              +
-			    strFuncionarioJoin                                                                                          +
+			    " SELECT p.idpessoa     idPessoa,     p.nome           nome,           p.dataNasc     dataNasc,     \n" +
+			    "        p.cpf          cpf,          p.rg             rg,             p.tpPessoa     tpPessoa,     \n" +
+			    "        c.idContato    idContato,    c.email          email,          c.telCelular   telCelular,   \n" +
+			    "        c.telComercial telComercial, c.telResidencial telResidencial, e.idEndereco   idEndereco,   \n" +
+			    "        e.logradouro   logradouro,   e.numero         numero,         e.complemento  complemento,  \n" +
+			    "        e.bairro       bairro,       e.cidade         cidade,         e.uf           uf,           \n" +
+			    "        e.cep          cep                                                                         \n" +
+			    strClienteCampo                                                                                         +
+			    "   FROM pessoa p                                                                                   \n" +
+			    "   LEFT JOIN contato  c ON p.idpessoa  = c.id_pessoa                                               \n" +
+			    "   LEFT JOIN endereco e ON c.idcontato = e.id_contato                                              \n" +
+			    strClienteJoin                                                                                          +
+			    strFuncionarioJoin                                                                                      +
 			    strWhere );
 			
 			rs = ps.executeQuery( );
@@ -138,15 +133,12 @@ public class PessoaDAO extends DAO
 				pessoa.getContato( ).getEndereco( ).setCep        ( rs.getString( "cep"         ) );
 				
 				//Telefone Residencial
-				pessoa.getContato( ).setDddResidencial( rs.getString( "dddResidencial" ) );
 				pessoa.getContato( ).setTelResidencial( rs.getString( "telResidencial" ) );
 				
 				//Telefone Comercial
-				pessoa.getContato( ).setDddComercial( rs.getString( "dddComercial" ) );
 				pessoa.getContato( ).setTelComercial( rs.getString( "telComercial" ) );
 				
 				//Celular
-				pessoa.getContato( ).setDddCelular( rs.getString( "dddCelular" ) );
 				pessoa.getContato( ).setTelCelular( rs.getString( "telCelular" ) );
 				
 				if( this instanceof ClienteDAO )
