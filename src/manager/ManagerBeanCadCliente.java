@@ -2,210 +2,169 @@ package manager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import persistence.ClienteDAO;
+import org.apache.commons.lang.StringUtils;
+
+import service.ClienteService;
+import service.impl.ClienteServiceImpl;
 import util.Formulario;
 import util.StatusRetorno;
-import util.Util;
-import validate.ValidaDadosPessoa;
+import validate.ValidadorPessoa;
+import view.ClienteDTO;
 import entity.Cliente;
 
 /**
- * Classe responsável por gerenciar a tela de <i>Cadastro de Cliente</i>.
+ * Classe responsavel por gerenciar a tela de <i>Cadastro de Cliente</i>.
  */
-@ManagedBean( name = "mbCadCliente" )
+@ManagedBean(name = "mbCadCliente")
 @SessionScoped
-public class ManagerBeanCadCliente extends TrataLogin implements Serializable
-{
+public class ManagerBeanCadCliente extends TrataLogin implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private ArrayList<Cliente> clientes;
-	private String             nome;
-	private String             telefone;
-	private Cliente            cliente;
-	private Cliente            clienteSelected;
-	private String             data;
-	private String             celular;
-	private String             telResidencial;
-	private String             telComercial;
+	private List<ClienteDTO> clientes;
+	private String           nome;
+	private String           telefone;
+	private ClienteDTO       cliente;
+	private ClienteDTO       clienteSelected;
+	private ClienteService   clienteService;
 	
-	/**
-	 * Construtor da classe.
-	 */
-	public ManagerBeanCadCliente( )
-	{
-		setClientes       ( new ArrayList<Cliente>( ) );
-		setNome           ( ""                        );
-		setTelefone       ( ""                        );
-		setClienteSelected( new Cliente( )            );
-		setCliente        ( new Cliente( )            );
-		
-		inicializaVariaveis( );
+	public ManagerBeanCadCliente() {
+		setClientes       (new ArrayList<ClienteDTO>());
+		setNome           (""                         );
+		setTelefone       (""                         );
+		setClienteSelected(new ClienteDTO()           );
+		setCliente        (new ClienteDTO()           );
 	}
 
-	@SuppressWarnings( "unchecked" )
-	public String busca( )
-	{
-		FacesContext  fc       = FacesContext.getCurrentInstance( );
-		String        msg      = "";
-		StatusRetorno sRetorno = new StatusRetorno( );
+	public String busca() {
+		FacesContext  fc  = FacesContext.getCurrentInstance();
+		String        msg = "";
 		
-		clientes = new ArrayList<Cliente>( );
+		clienteService = new ClienteServiceImpl();
 		
-		try
-		{
-			nome     = Util.trataString( nome     );
-			telefone = Util.trataString( telefone );
+		setClientes(new ArrayList<ClienteDTO>());
+		
+		try {
+			setNome    (StringUtils.trimToEmpty(getNome    ()));
+			setTelefone(StringUtils.trimToEmpty(getTelefone()));
 			
-			if( !Util.isnEmptyOrNull( nome ) && !Util.isnEmptyOrNull( telefone ) )
-			{
-				telefone = telefone.replaceAll( "[(]", "" ).replaceAll( "[)]", "" ).replaceAll( "[-]", "" );
-				ValidaDadosPessoa.validaTelefone( telefone, sRetorno );
-				
-				if( sRetorno.isOk( ) )
-					clientes = (new ClienteDAO( )).coletaClienteByTelefoneAndNome( telefone, nome );
+			if(!getNome().isEmpty()) {
+			    setClientes(converteListaClienteEntityParaListaClienteDTO(clienteService.coletaClientePeloNome(getNome())));
+			} else if(!getTelefone().isEmpty()) {
+			    setClientes(converteListaClienteEntityParaListaClienteDTO(clienteService.coletaClientePeloTelefone(getTelefone())));
+			} else {
+			    setClientes(converteListaClienteEntityParaListaClienteDTO(clienteService.coletaListaClientes()));
 			}
-			else if( !Util.isnEmptyOrNull( nome ) )
-			{
-				clientes = (new ClienteDAO( )).coletaClienteByNome( nome );
-			}
-			else if( !Util.isnEmptyOrNull( telefone ) )
-			{
-				telefone = telefone.replaceAll( "[(]", "" ).replaceAll( "[)]", "" ).replaceAll( "[-]", "" );
-				ValidaDadosPessoa.validaTelefone( telefone, sRetorno );
-				
-				if( sRetorno.isOk( ) )
-					clientes = (new ClienteDAO( )).coletaClienteByTelefone( telefone );
-			}
-			else
-				clientes = (ArrayList<Cliente>) (new ClienteDAO( )).coletaTodasAsPessoas( );
 		}
-		catch( Exception ex )
-		{
-			msg = "Erro: " + ex.getMessage( );
-			ex.printStackTrace( );
+		catch(Exception ex) {
+			msg = "Erro: " + ex.getMessage();
+			ex.printStackTrace();
 		}
 		
-		fc.addMessage( Formulario.s_strFormBuscaCliente, new FacesMessage( msg ) );
+		fc.addMessage(Formulario.s_strFormBuscaCliente, new FacesMessage(msg));
 		
 		return null;
 	}
-	
-	public String incluiCliente( )
-	{
-		FacesContext  fc       = FacesContext.getCurrentInstance( );
-		ClienteDAO    cliDao   = new ClienteDAO( );
-		StatusRetorno sRetorno = new StatusRetorno( );
+
+	public String incluiCliente() {
+	    clienteService = new ClienteServiceImpl();
+	    
+	    FacesContext  fc       = FacesContext.getCurrentInstance();
+		StatusRetorno sRetorno = new StatusRetorno();
 		
-		try
-		{
-			ValidaDadosPessoa valida = new ValidaDadosPessoa( );
-			
-			valida.setDataNasc( data );
-			
-			sRetorno = valida.validaCliente( cliente );
-			
-			if( sRetorno.isOk( ) )
-				sRetorno.setbOk( cliDao.insereCliente( cliente ) );
-			
-		}
-		catch( Exception ex )
-		{
-			ex.printStackTrace( );
-		}
-		finally
-		{
-			if( sRetorno.isOk( ) )
-			{
+		try {
+			sRetorno = clienteService.incluiCliente(getCliente().toEntity());
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if(sRetorno.isOk()) {
 				fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_INFO, "Inserido com sucesso", null));
 				
-				if( cliente != null && clientes != null )
-				{
-					cliente = cliDao.coletaClienteById(cliente.getIdPessoa( ));
-					clientes.add( cliente );
+				if(getCliente() != null && getClientes() != null) {
+					Cliente clienteEncontrado = clienteService.coletaClientePeloId(cliente.getIdPessoa());
+                    setCliente(clienteEncontrado.toView());
+					getClientes().add(cliente);
 				}
+			} else {
+				fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_ERROR, sRetorno.getMsgErro().replace("/n", "<br>"), null));
 			}
-			else
-				fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_ERROR, sRetorno.getMsgErro( ).replace("/n", "<br>"), null));
 
-			cliente = new Cliente( );
-			
-			inicializaVariaveis( );
+			setCliente(new ClienteDTO());
 		}
-		
 		return null;
 	}
 	
-	public String excluiCliente( )
-	{
-		ClienteDAO    cliDao   = new ClienteDAO( );
-		FacesContext  fc       = FacesContext.getCurrentInstance( );
+	public String excluiCliente() {
+	    clienteService = new ClienteServiceImpl();
+		FacesContext fc = FacesContext.getCurrentInstance();
 		
-		if( clienteSelected != null && cliDao.excluiCliente( clienteSelected ) )
-		{
-			fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente excluído com sucesso", null));
+		if(getClienteSelected() != null && clienteService.excluiCliente(getClienteSelected().toEntity()).isOk()) {
+			fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente excluÃ­do com sucesso", null));
 			
-			if( clienteSelected != null && clientes != null )
-				clientes.remove( clienteSelected );
+			if(getClienteSelected() != null && getClientes() != null) {
+				getClientes().remove(getClienteSelected());
+			}
+		} else {
+			fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_ERROR, "NÃ£o foi possÃ­vel excluir o cliente!", null));
 		}
-		else
-			fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possível excluir o cliente!", null));
-		
 		return null;
 	}
 	
-	public String alteraCliente( )
-	{
-		ClienteDAO        cliDao = new ClienteDAO( );
-		FacesContext      fc     = FacesContext.getCurrentInstance( );
-		ValidaDadosPessoa valida = new ValidaDadosPessoa( );
+	public String alteraCliente() {
+	    clienteService = new ClienteServiceImpl();
+	    
+		FacesContext      fc     = FacesContext.getCurrentInstance();
+		ValidadorPessoa valida = new ValidadorPessoa();
 		String            msg    = "";
 		
-		if( clienteSelected != null )
-		{
-			StatusRetorno sRetorno = valida.validaCliente(clienteSelected);
+		if(getClienteSelected() != null) {
+			StatusRetorno sRetorno = valida.aplica(getClienteSelected().toEntity());
 			
-			if( sRetorno.isOk( ) && cliDao.atualizaCliente( clienteSelected ) )
+			if(sRetorno.isOk() && clienteService.alteraCliente(getClienteSelected().toEntity()).isOk()) {
 				msg = "Cliente alterado com sucesso!";
-			else
-				msg = sRetorno.getMsgErro( ).replaceAll( "\n", "<br>" );
+			} else {
+				msg = sRetorno.getMsgErro().replaceAll("\n", "<br>");
+			}
+		} else {
+			msg = "NÃ£o foi possÃ­vel alterar o cliente!";
 		}
-		else
-			msg = "Não foi possível alterar o cliente!";
 		
 		fc.addMessage("aviso", new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null));
 		
 		return null;
 	}
-	
-	public void inicializaVariaveis( )
-	{
-		setData          ( "" );
-		setCelular       ( "" );
-		setTelResidencial( "" );
-		setTelComercial  ( "" );
-	}
+
+    private List<ClienteDTO> converteListaClienteEntityParaListaClienteDTO(List<Cliente> clientesEntity) {
+        List<ClienteDTO> listaClientesDTO = new ArrayList<ClienteDTO>();
+        
+        if(clientesEntity != null && clientesEntity.size() > 0) {
+            for(Cliente cliente : clientesEntity) {
+                listaClientesDTO.add(cliente.toView()) ;
+            }
+        }
+        
+        return listaClientesDTO;
+    }
 	
 	/**
 	 * Coleta os clientes
-	 * @return {@link ArrayList} de {@link Cliente}.
+	 * @return {@link List} de {@link Cliente}.
 	 */
-	public ArrayList<Cliente> getClientes( )
-	{
+	public List<ClienteDTO> getClientes() {
 		return clientes;
 	}
 
 	/**
 	 * Configura os clientes.
-	 * @param clientes {@link ArrayList} de {@link Cliente}
+	 * @param clientes {@link List} de {@link ClienteDTO}
 	 */
-	public void setClientes( ArrayList<Cliente> clientes )
-	{
+	public void setClientes(List<ClienteDTO> clientes) {
 		this.clientes = clientes;
 	}
 	
@@ -213,8 +172,7 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 	 * Coleta o nome do cliente informado na busca.
 	 * @return nome do cliente
 	 */
-	public String getNome( )
-	{
+	public String getNome() {
 		return nome;
 	}
 
@@ -222,8 +180,7 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 	 * Configura o nome do cliente na busca.
 	 * @param nome nome do cliente
 	 */
-	public void setNome( String nome )
-	{
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
@@ -231,8 +188,7 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 	 * Coleta o telefone do cliente na busca.
 	 * @return telefone do cliente
 	 */
-	public String getTelefone( )
-	{
+	public String getTelefone() {
 		return telefone;
 	}
 
@@ -240,125 +196,43 @@ public class ManagerBeanCadCliente extends TrataLogin implements Serializable
 	 * Configura o telefone do cliente na busca.
 	 * @param telefone telefone do cliente
 	 */
-	public void setTelefone( String telefone )
-	{
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 
 	/**
-	 * Coleta o {@link Cliente} novo da <code>dataTable</code> da tela de Cadastro de cliente.
-	 * @return {@link Cliente}
+	 * Coleta o {@link ClienteDTO} novo da <code>dataTable</code> da tela de Cadastro de cliente.
+	 * @return {@link ClienteDTO}
 	 */
-	public Cliente getCliente( )
-	{
+	public ClienteDTO getCliente() {
 		return cliente;
 	}
 
 	/**
-	 * Configura o {@link Cliente} novo da <code>dataTable</code> da tela de Cadastro de cliente.
-	 * @param cliente {@link Cliente}
+	 * Configura o {@link ClienteDTO} novo da <code>dataTable</code> da tela de Cadastro de cliente.
+	 * @param cliente {@link ClienteDTO}
 	 */
-	public void setCliente( Cliente cliente )
-	{
+	public void setCliente(ClienteDTO cliente) {
 		this.cliente = cliente;
 	}
 
 	/**
-	 * Coleta o {@link Cliente} novo da <code>dataTable</code> da tela de Cadastro de cliente.
-	 * @return {@link Cliente}
+	 * Coleta o {@link ClienteDTO} novo da <code>dataTable</code> da tela de Cadastro de cliente.
+	 * @return {@link ClienteDTO}
 	 */
-	public Cliente getClienteSelected( )
-	{
+	public ClienteDTO getClienteSelected() {
 		return clienteSelected;
 	}
 
 	/**
-	 * Configura o {@link Cliente} selecionado na <code>dataTable</code> da tela de Cadastro de cliente.
-	 * @param clienteSelected {@link Cliente}
+	 * Configura o {@link ClienteDTO} selecionado na <code>dataTable</code> da tela de Cadastro de cliente.
+	 * @param clienteSelected {@link ClienteDTO}
 	 */
-	public void setClienteSelected( Cliente clienteSelected )
-	{
+	public void setClienteSelected(ClienteDTO clienteSelected) {
 		this.clienteSelected = clienteSelected;
 	}
 
-	/**
-	 * Coleta a data informada na tela.
-	 * @return Data em forma de {@link String}
-	 */
-	public String getData( )
-	{
-		return data;
-	}
-
-	/**
-	 * Configura a data informada na tela
-	 * @param data data em {@link String}
-	 */
-	public void setData( String data ) 
-	{
-		this.data = data;
-	}
-
-	/**
-	 * Coleta o serial.
-	 * @return serial
-	 */
-	public static long getSerialversionuid( )
-	{
+	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-	
-	/**
-	 * Coleta o celular.
-	 * @return celuar com DDD.
-	 */
-	public String getCelular( )
-	{
-		return celular;
-	}
-
-	/**
-	 * Configura o celular
-	 * @param celular número do celular com DDD
-	 */
-	public void setCelular( String celular )
-	{
-		this.celular = celular;
-	}
-
-	/**
-	 * Coleta o telefone residencial.
-	 * @return telefone residencial com DDD
-	 */
-	public String getTelResidencial( )
-	{
-		return telResidencial;
-	}
-
-	/**
-	 * Configura o telefone residencial.
-	 * @param telResidencial telefone residencial com DDD
-	 */
-	public void setTelResidencial( String telResidencial )
-	{
-		this.telResidencial = telResidencial;
-	}
-
-	/**
-	 * Coleta telefone comercial.
-	 * @return telefone comercial com DDD
-	 */
-	public String getTelComercial( )
-	{
-		return telComercial;
-	}
-	
-	/**
-	 * Coleta telefone comercial.
-	 * @param telComercial telefone comercial com DDD
-	 */
-	public void setTelComercial( String telComercial )
-	{
-		this.telComercial = telComercial;
 	}
 }

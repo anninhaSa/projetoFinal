@@ -4,84 +4,76 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import util.Util;
-import entity.Cliente;
-import entity.Contato;
-import entity.Endereco;
+import view.ClienteDTO;
+import view.ContatoDTO;
+import view.EnderecoDTO;
 
-public class ValidaCliente_test extends TestCase{
-	ValidaDadosPessoa valida = new ValidaDadosPessoa( );
+public class ValidaCliente_test extends TestCase {
+	ValidadorPessoa valida = new ValidadorPessoa();
 	
 	@Test
-	public void test_cliente_valido_totalmente_preenchido( ) {
-		assertTrue( valida.validaCliente( coletaClienteValido( ) ).isOk( ) );
+	public void test_cliente_valido_totalmente_preenchido() {
+		assertTrue(valida.aplica(coletaClienteValido().toEntity()).isOk());
 	}
 	
-	//TODO Só os campos obrigatórios preenchidos
-	//TODO Um dos campos obrigatórios não preenchido
+	//TODO Sï¿½ os campos obrigatï¿½rios preenchidos
+	//TODO Um dos campos obrigatï¿½rios nï¿½o preenchido
 	
 	@Test
-	public void test_cliente_nome_vazio( ) {
-		Cliente c = coletaClienteValido( );
+	public void test_cliente_nome_vazio() {
+		ClienteDTO c = coletaClienteValido();
 		
 		c.setNome("");
 		
-		assertFalse( valida.validaCliente( c ).isOk( ) );
+		assertFalse(valida.aplica(c.toEntity()).isOk());
 	}
 	
 	@Test
-	public void test_cliente_nome_nulo( ) {
-		Cliente c = coletaClienteValido( );
+	public void test_cliente_nome_nulo() {
+		ClienteDTO c = coletaClienteValido();
 		
 		c.setNome(null);
 		
-		assertFalse( valida.validaCliente( c ).isOk( ) );
+		assertFalse(valida.aplica(c.toEntity()).isOk());
 	}
 	
 	@Test
-	public void test_cliente_CPF_invalido( ) {
-		Cliente c = coletaClienteValido( );
+	public void test_cliente_CPF_invalido() {
+		ClienteDTO c = coletaClienteValido();
 		
-		c.setCPF( "076.799.577-01" );
+		c.setCPF("076.799.577-01");
 		
-		assertFalse( valida.validaCliente( c ).isOk( ) );
+		assertFalse(valida.aplica(c.toEntity()).isOk());
 	}
 	
 	@Test
-	public void test_cliente_CPF_vazio( ) {
-		Cliente c = coletaClienteValido( );
+	public void test_cliente_CPF_vazio() {
+		ClienteDTO c = coletaClienteValido();
 		
-		c.setCPF( "" );
+		c.setCPF("");
 		
-		assertTrue( valida.validaCliente( c ).isOk( ) );
+		assertTrue(valida.aplica(c.toEntity()).isOk());
 	}
 	
 	@Test
-	public void test_cliente_CPF_nulo( ) {
-		Cliente c = coletaClienteValido( );
+	public void test_cliente_CPF_nulo() {
+		ClienteDTO c = coletaClienteValido();
 		
-		c.setCPF( null );
+		c.setCPF(null);
 		
-		assertTrue( valida.validaCliente( c ).isOk( ) );
+		assertTrue(valida.aplica(c.toEntity()).isOk());
 	}
 	
-	public Cliente coletaClienteValido( ) {
-		Cliente c = new Cliente( "Anna", Util.trataData("03/11/1986"), null, "076.799.177-01" );
+	public ClienteDTO coletaClienteValido() {
+		ClienteDTO anna = new ClienteDTO(0, "Anna", "03/11/1986", "", "076.799.177-01", null, null, null, "");
 		
-		c.setContato( new Contato( "annasa03@gmail.com.br", null, null, null, null ) ); 
+		anna.setContato(new ContatoDTO(0, "annasa03@gmail.com.br", anna, null, "", "", "")); 
+		anna.getContato().setPessoa(anna);
+		anna.getContato().setEndereco(new EnderecoDTO(0, "Rua do Coelho", 773, "casa 3", "Baldeador", "Niteroi", "RJ", "24140050", anna.getContato()));
+		anna.getContato().setTelResidencial("(21)2625-2115");
+		anna.getContato().setTelComercial("(21)3233-5200");
+		anna.getContato().setTelCelular("(21)9955-82559");
 		
-		// É necessário adicionar o contato na pessoa e depois a pessoa no contato. Se isso não for feito o idPessoa do contato será NULL pois a pessoa do contato está NULL.
-		c.getContato( ).setPessoa( c );
-		
-		c.getContato( ).setEndereco( new Endereco( "Rua do Coelho", 773, "casa 3", "Baldeador", "Niterói", "RJ", "24140050" ) );
-		c.getContato( ).getEndereco( ).setContato( c.getContato( ) );
-		
-		c.getContato( ).setTelResidencial( "2126252115" );
-
-		c.getContato( ).setTelComercial( "2132335200" );
-
-		c.getContato( ).setTelCelular( "21995582559" );
-		
-		return c;
+		return anna;
 	}
 }

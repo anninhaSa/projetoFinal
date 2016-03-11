@@ -1,11 +1,11 @@
-package persistence;
+package persistence.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class DAO
+public class DAOImpl
 {
 	Connection        con;
 	PreparedStatement ps;

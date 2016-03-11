@@ -6,12 +6,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import process.ProcessaAutenticacao;
+import service.ProcessaAutenticacao;
 import util.Util;
 import entity.Autenticacao;
 
 /**
- * Classe responsável por gerenciar a tela de <i>Menu</i>.
+ * Classe responsï¿½vel por gerenciar a tela de <i>Menu</i>.
  */
 @ManagedBean( name = "mbMenu" )
 @SessionScoped
@@ -49,8 +49,8 @@ public class ManagerBeanMenu implements Serializable
 	}
 
 	/**
-	 * Coleta o nome do usuário logado no sistema.
-	 * @return nome do usuário logado no sistema
+	 * Coleta o nome do usuï¿½rio logado no sistema.
+	 * @return nome do usuï¿½rio logado no sistema
 	 */
 	public String getNomeUsrLogado( )
 	{
@@ -63,8 +63,8 @@ public class ManagerBeanMenu implements Serializable
 	}
 
 	/**
-	 * Configura o nome do usuário logado.
-	 * @param strNomeUsrLogado nome do usuário logado no sistema
+	 * Configura o nome do usuï¿½rio logado.
+	 * @param strNomeUsrLogado nome do usuï¿½rio logado no sistema
 	 */
 	public void setNomeUsrLogado( String strNomeUsrLogado )
 	{
@@ -72,8 +72,8 @@ public class ManagerBeanMenu implements Serializable
 	}
 	
 	/**
-	 * Verifica se o usuário está logado no sistema.
-	 * @return <code>TRUE</code> caso exista usuário logado no sistema e <code>FALSE</code> caso contrário.
+	 * Verifica se o usuï¿½rio estï¿½ logado no sistema.
+	 * @return <code>TRUE</code> caso exista usuï¿½rio logado no sistema e <code>FALSE</code> caso contrï¿½rio.
 	 */
 	public boolean isUsrLogado( FacesContext fc )
 	{

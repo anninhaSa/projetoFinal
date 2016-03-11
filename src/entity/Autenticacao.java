@@ -1,7 +1,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,182 +14,108 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Classe com atributos da autenticação.
+ * Classe com atributos da autenticacao.
  *
  */
 @Entity
-@SequenceGenerator( name = "seq_autenticacao", sequenceName = "seq_autenticacao" )
-public class Autenticacao implements Serializable
-{
-	/**
-	 * Serial
-	 */
+@SequenceGenerator(name = "seq_autenticacao", sequenceName = "seq_autenticacao")
+public class Autenticacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue( generator = "seq_autenticacao" )
-	private int idAutenticacao;
+	@GeneratedValue(generator = "seq_autenticacao")
+	private Integer idAutenticacao;
 	
-	@Column( length = 15, unique = true )
+	@Column(length = 15, unique = true)
 	private String usuario;
 	
 	private String senha;
 	
 	@OneToOne
-	@JoinColumn( name = "id_funcionario" )
+	@JoinColumn(name = "id_funcionario")
 	private Funcionario funcionario;
 	
-	@Temporal( value = TemporalType.TIMESTAMP )
-	private Calendar incDH;
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date incDH;
 	
-	@Temporal( value = TemporalType.TIMESTAMP )
-	private Calendar altDH;
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date altDH;
 	
-	/**
-	 * Construtor da classe {@link Autenticacao}.
-	 */
-	public Autenticacao( )
-	{
-		setIdAutenticacao( 0  );
-		setUsuario       ( "" );
-		setSenha         ( "" );
+	public Autenticacao() {
+		setIdAutenticacao(0 );
+		setUsuario       ("");
+		setSenha         ("");
 	}
 	
-	/**
-	 * Construtor da classe {@link Autenticacao} sem o id.
-	 * @param usuario usuário
-	 * @param senha senha
-	 * @param funcionario {@link Funcionario}
-	 */
-	public Autenticacao( String usuario, String senha, Funcionario funcionario )
-	{
-		super( );
-		setUsuario    ( usuario     );
-		setSenha      ( senha       );
-		setFuncionario( funcionario );
-	}
-
-	/**
-	 * Construtor da classe {@link Autenticacao} com TODOS os atributos da classe.
-	 * @param idAutenticacao id da autenticação
-	 * @param usuario usuário
-	 * @param senha senha
-	 * @param funcionario {@link Funcionario}
-	 */
-	public Autenticacao( int idAutenticacao, String usuario, String senha, Funcionario funcionario )
-	{
-		super( );
-		setIdAutenticacao( idAutenticacao );
-		setUsuario       ( usuario        );
-		setSenha         ( senha          );
-		setFuncionario   ( funcionario    );
+	public Autenticacao(Integer idAutenticacao, String usuario, String senha, Funcionario funcionario) {
+		super();
+		setIdAutenticacao(idAutenticacao);
+		setUsuario       (usuario       );
+		setSenha         (senha         );
+		setFuncionario   (funcionario   );
 	}
 	
-	/**
-	 * Coleta Id da autenticação.
-	 * @return Id da autenticação.
-	 */
-	public int getIdAutenticacao( )
-	{
+	public int getIdAutenticacao() {
 		return idAutenticacao;
 	}
 
-	/**
-	 * Configura Id da autenticação.
-	 * @param idAutenticacao id da autenticação.
-	 */
-	public void setIdAutenticacao( int idAutenticacao )
-	{
+	public void setIdAutenticacao(Integer idAutenticacao) {
 		this.idAutenticacao = idAutenticacao;
 	}
 
-	/**
-	 * Coleta o usuário.
-	 * @return usuário
-	 */
-	public String getUsuario( )
-	{
+	public String getUsuario() {
 		return usuario;
 	}
 
-	/**
-	 * Configura o usuário.
-	 * @param usuario usuário
-	 */
-	public void setUsuario( String usuario )
-	{
+	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
 
-	/**
-	 * Coleta a senha.
-	 * @return senha
-	 */
-	public String getSenha( )
-	{
+	public String getSenha() {
 		return senha;
 	}
 
-	/**
-	 * Configura a senha.
-	 * @param senha senha
-	 */
-	public void setSenha( String senha )
-	{
+	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 
-	/**
-	 * Coleta o funcionário a quem a autenticação pertence.
-	 * @return {@link Funcionario}
-	 */
-	public Funcionario getFuncionario( )
-	{
+	public Funcionario getFuncionario() {
 		return funcionario;
 	}
 
-	/**
-	 * Configura o funcionário a quem a autenticação pertence.
-	 * @param funcionario {@link Funcionario}
-	 */
-	public void setFuncionario( Funcionario funcionario )
-	{
+	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
 
 	/**
-	 * Coleta a data e a hora da inclusão da autenticação
-	 * @return {@link Calendar} com a data e a hora da inclusão da autenticação
+	 * Coleta a data e a hora da inclusao da autenticacao
+	 * @return {@link Date} com a data e a hora da inclusao da autenticacao
 	 */
-	public Calendar getIncDH( )
-	{
+	public Date getIncDH() {
 		return incDH;
 	}
 
 	/**
-	 * Configura a data e a hora da inclusão da autentição.
-	 * @param incDH {@link Calendar} com a data e a hora da inclusão da autenticação
+	 * Configura a data e a hora da inclusao da autenticacao.
+	 * @param incDH {@link Date} com a data e a hora da inclusao da autenticacao
 	 */
-	public void setIncDH( Calendar incDH )
-	{
+	public void setIncDH(Date incDH) {
 		this.incDH = incDH;
 	}
 
 	/**
-	 * Coleta a data e a hora da alteração da autenticação
-	 * @return {@link Calendar} com a data e a hora da alteração da autenticação
+	 * Coleta a data e a hora da alteracao da autenticacao
+	 * @return {@link Date} com a data e a hora da alteracao da autenticacao
 	 */
-	public Calendar getAltDH( )
-	{
+	public Date getAltDH() {
 		return altDH;
 	}
 
 	/**
-	 * Configura data e hora da alteração da autenticação
-	 * @param altDH {@link Calendar} com a data e hora da alteração da autenticação
+	 * Configura data e hora da alteracao da autenticacao
+	 * @param altDH {@link Date} com a data e hora da alteracao da autenticacao
 	 */
-	public void setAltDH( Calendar altDH )
-	{
+	public void setAltDH(Date altDH) {
 		this.altDH = altDH;
 	}
 }

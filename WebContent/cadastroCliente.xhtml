@@ -101,14 +101,14 @@
 					<p:inputMask id="rgInc" value="#{mbCadCliente.cliente.RG}" size="11"/>
 					
 					<h:outputLabel value="Tel. Res."/>
-					<p:inputMask id="telResInc" value="#{mbCadCliente.telResidencial}" mask="(99)9999-9999"/>
+					<p:inputMask id="telResInc" value="#{mbCadCliente.cliente.contato.telResidencial}" mask="(99)9999-9999"/>
 					<h:outputLabel value="Cel."/>
-					<p:inputMask id="telCelInc" value="#{mbCadCliente.celular}" mask="(99)9999-9999?9"/>
+					<p:inputMask id="telCelInc" value="#{mbCadCliente.cliente.contato.telCelular}" mask="(99)9999-9999?9"/>
 					
 					<h:outputLabel value="Tel. Com."/>
-					<p:inputMask id="telComInc" value="#{mbCadCliente.telComercial}" mask="(99)9999-9999"/>
+					<p:inputMask id="telComInc" value="#{mbCadCliente.cliente.contato.telComercial}" mask="(99)9999-9999"/>
 					<h:outputLabel value="Dat. Nasc."/>
-					<p:inputMask id="dataNascInc" value="#{mbCadCliente.data}" mask="99/99/9999"/>
+					<p:inputMask id="dataNascInc" value="#{mbCadCliente.cliente.dataNasc}" mask="99/99/9999"/>
 					
 					<h:outputLabel value="Logradouro"/>
 					<p:inputText id="logradouroInc" value="#{mbCadCliente.cliente.contato.endereco.logradouro}" size="70"/>

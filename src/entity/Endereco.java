@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,363 +12,203 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.commons.lang.StringUtils;
+
+import util.Util;
+import view.EnderecoDTO;
+
 /**
- * Classe com atributos do endereço. 
+ * Classe com atributos do endereco.
  */
 @Entity
-@SequenceGenerator( name = "seq_endereco", sequenceName = "seq_endereco" )
-public class Endereco
-{
+@SequenceGenerator(name = "seq_endereco", sequenceName = "seq_endereco")
+public class Endereco {
 	@Id
-	@GeneratedValue( generator = "seq_endereco" )
+	@GeneratedValue(generator = "seq_endereco")
 	private Integer idEndereco;
 	
-	@Column( length = 100 )
+	@Column(length = 100)
 	private String logradouro;
 	
 	private Integer numero;
 	
-	@Column( length = 50 )
+	@Column(length = 50)
 	private String complemento;
 	
-	@Column( length = 40 )
+	@Column(length = 40)
 	private String bairro;
 	
-	@Column( length = 40 )
+	@Column(length = 40)
 	private String cidade;
 	
-	@Column( length = 2 )
+	@Column(length = 2)
 	private String uf;
 	
-	@Column( length = 8 )
+	@Column(length = 8)
 	private String cep;
 	
 	@OneToOne
-	@JoinColumn( name = "id_contato" )
+	@JoinColumn(name = "id_contato")
 	private Contato contato;
 	
-	@Temporal( value = TemporalType.TIMESTAMP )
-	private Calendar incDH;
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date incDH;
 	
-	@Temporal( value = TemporalType.TIMESTAMP )
-	private Calendar altDH;
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date altDH;
 	
-	/**
-	 * Construtor da classe {@link Endereco} (inicializa todos os atributos).
-	 */
-	public Endereco( )
-	{
-		setIdEndereco ( 0  );
-		setLogradouro ( "" );
-		setNumero     ( 0  );
-		setComplemento( "" );
-		setBairro     ( "" );
-		setCidade     ( "" );
-		setUF         ( "" );
-		setCep        ( "" );
-	}
-
-	/**
-	 * Construtor da classe {@link Endereco} com os atributos DA CLASSE parametrizados.
-	 * @param idEndereco Código identificador do endereço
-	 * @param logradouro Logradouro
-	 * @param numero Número da residência
-	 * @param complemento Complemento
-	 * @param bairro Bairro
-	 * @param cidade Cidade
-	 * @param uf UF
-	 * @param cep CEP
-	 */
-	public Endereco( Integer idEndereco, String logradouro, Integer numero, String complemento,
-			         String  bairro,     String cidade,     String  uf,     String cep )
-	{
-		setIdEndereco ( idEndereco  );
-		setLogradouro ( logradouro  );
-		setNumero     ( numero      );
-		setComplemento( complemento );
-		setBairro     ( bairro      );
-		setCidade     ( cidade      );
-		setUF         ( uf          );
-		setCep        ( cep         );
-		setContato    ( new Contato( ) );
-	}
-
-	/**
-	 * Construtor da classe {@link Endereco} com TODOS os atributos parametrizados 
-	 * (os atributos da classe e os objetos de outras classes que estão relacionados com 
-	 * {@link Endereco}).
-	 * @param idEndereco Código identificador do endereço
-	 * @param logradouro Logradouro
-	 * @param numero Número da residência
-	 * @param complemento Complemento
-	 * @param bairro Bairro
-	 * @param cidade Cidade
-	 * @param uf UF
-	 * @param cep CEP
-	 * @param contato {@link Contato}
-	 */
-	public Endereco( Integer idEndereco, String logradouro, Integer numero, String  complemento, String bairro,
-			         String  cidade,     String uf,         String  cep,    Contato contato )
-	{
-		setIdEndereco ( idEndereco  );
-		setLogradouro ( logradouro  );
-		setNumero     ( numero      );
-		setComplemento( complemento );
-		setBairro     ( bairro      );
-		setCidade     ( cidade      );
-		setUF         ( uf          );
-		setCep        ( cep         );
-		setContato    ( contato     );
+	public Endereco() {
+		setIdEndereco (0 );
+		setLogradouro ("");
+		setNumero     (0 );
+		setComplemento("");
+		setBairro     ("");
+		setCidade     ("");
+		setUf         ("");
+		setCep        ("");
 	}
 	
-	/**
-	 * Construtor da classe {@link Endereco} somente com os atributos de um endereço.
-	 * @param idEndereco Código identificador do endereço
-	 * @param logradouro Logradouro
-	 * @param numero Número da residência
-	 * @param complemento Complemento
-	 * @param bairro Bairro
-	 * @param cidade Cidade
-	 * @param uf UF
-	 * @param cep CEP
-	 * @param contato {@link Contato}
-	 */
-	public Endereco( String logradouro, Integer numero, String  complemento, String bairro,
-			         String  cidade,     String uf,         String  cep )
-	{
-		setLogradouro ( logradouro  );
-		setNumero     ( numero      );
-		setComplemento( complemento );
-		setBairro     ( bairro      );
-		setCidade     ( cidade      );
-		setUF         ( uf          );
-		setCep        ( cep         );
+	public Endereco(Integer idEndereco, String logradouro, Integer numero, String  complemento, String bairro,
+			        String  cidade,     String uf,         String  cep,    Contato contato) {
+		setIdEndereco (idEndereco );
+		setLogradouro (logradouro );
+		setNumero     (numero     );
+		setComplemento(complemento);
+		setBairro     (bairro     );
+		setCidade     (cidade     );
+		setUf         (uf         );
+		setCep        (cep        );
+		setContato    (contato    );
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString( )
-	{
+	public String toString() {
 		return "Endereco [idEndereco=" + idEndereco + ", logradouro="  + logradouro  + 
 			   ", numero="             + numero     + ", complemento=" + complemento + 
 			   ", bairro="             + bairro     + ", cidade="      + cidade      +
 			   ", uf="                 + uf         + ", cep="         + cep         + "]";
 	}
 
-	/**
-	 * Coleta o código identificador do endereço.
-	 * @return código identificador do endereço
-	 */
-	public Integer getIdEndereco( )
-	{
+	public Integer getIdEndereco() {
 		return idEndereco;
 	}
 
-	/**
-	 * Configura o código identificador do endereço
-	 * @param idEndereco código identificador do endereço
-	 */
-	public void setIdEndereco( Integer idEndereco )
-	{
+	public void setIdEndereco(Integer idEndereco) {
 		this.idEndereco = idEndereco;
 	}
 
-	/**
-	 * Coleta o logradouro.
-	 * @return rua.
-	 */
-	public String getLogradouro( )
-	{
+	public String getLogradouro() {
 		return logradouro;
 	}
 
-	/**
-	 * Configura a rua.
-	 * @param rua rua
-	 */
-	public void setLogradouro( String logradouro )
-	{
+	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
 	}
 
-	/**
-	 * Configura o número.
-	 * @return número
-	 */
-	public Integer getNumero( )
-	{
+	public Integer getNumero() {
 		return numero;
 	}
 
-	/**
-	 * Configura o número
-	 * @param numero número
-	 */
-	public void setNumero( Integer numero )
-	{
+	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}
 
-	/**
-	 * Coleta complemento.
-	 * @return complemento
-	 */
-	public String getComplemento( )
-	{
+	public String getComplemento() {
 		return complemento;
 	}
 
-	/**
-	 * Configura complemento
-	 * @param complemento complemento
-	 */
-	public void setComplemento( String complemento )
-	{
+	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
 
-	/**
-	 * Coleta bairro.
-	 * @return bairro
-	 */
-	public String getBairro( )
-	{
+	public String getBairro() {
 		return bairro;
 	}
 
-	/**
-	 * Configura bairro.
-	 * @param bairro bairro
-	 */
-	public void setBairro( String bairro )
-	{
+	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
 
-	/**
-	 * Coleta cidade.
-	 * @return cidade
-	 */
-	public String getCidade( )
-	{
+	public String getCidade() {
 		return cidade;
 	}
 
-	/**
-	 * Configura cidade.
-	 * @param cidade cidade
-	 */
-	public void setCidade( String cidade )
-	{
+	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
 
-	/**
-	 * Coleta UF.
-	 * @return UF
-	 */
-	public String getUF( )
-	{
-		return uf;
-	}
-
-	/**
-	 * Configura UF.
-	 * @param uf
-	 */
-	public void setUF( String uf )
-	{
-		this.uf = uf;
-	}
-
-	/**
-	 * Coleta {@link Contato}.
-	 * @return {@link Contato}
-	 */
-	public Contato getContato( )
-	{
+	public Contato getContato() {
 		return contato;
 	}
 
-	/**
-	 * Configura {@link Contato}.
-	 * @param contato {@link Contato}
-	 */
-	public void setContato( Contato contato )
-	{
+	public void setContato(Contato contato) {
 		this.contato = contato;
 	}
 
-	/**
-	 * Coleta a UF do endereço
-	 * @return UF
-	 */
-	public String getUf( )
-	{
+	public String getUf() {
 		return uf;
 	}
 
-	/**
-	 * Configura a UF do endereço.
-	 * @param uf UF
-	 */
-	public void setUf( String uf )
-	{
+	public void setUf(String uf) {
 		this.uf = uf;
 	}
 
-	/**
-	 * Coleta o CEP do endereço
-	 * @return CEP
-	 */
-	public String getCep( )
-	{
+	public String getCep() {
 		return cep;
 	}
 
-	/**
-	 * Coleta o CEP do endereço
-	 * @param cep CEP
-	 */
-	public void setCep( String cep )
-	{
+	public void setCep(String cep) {
 		this.cep = cep;
 	}
 
 	/**
-	 * Coleta a data e hora da inclusão do endereço.
-	 * @return {@link Calendar} com a data e hora da inclusão do endereço
+	 * Coleta a data e hora da inclusao do endereco.
+	 * @return {@link Date} com a data e hora da inclusao do endereco
 	 */
-	public Calendar getIncDH( )
-	{
+	public Date getIncDH() {
 		return incDH;
 	}
 
 	/**
-	 * Configura a data e hora da inclusão do endereço.
-	 * @param incDH {@link Calendar} com a data e hora da inclusão do endereço
+	 * Configura a data e hora da inclusao do endereco.
+	 * @param incDH {@link Date} com a data e hora da inclusao do endereco
 	 */
-	public void setIncDH( Calendar incDH )
-	{
+	public void setIncDH(Date incDH) {
 		this.incDH = incDH;
 	}
 
 	/**
-	 * Coleta a data e hora da alteração do endereço.
-	 * @return {@link Calendar} com a data e hora da alteração do endereço
+	 * Coleta a data e hora da alteracao do endereco.
+	 * @return {@link Date} com a data e hora da alteracao do endereco
 	 */
-	public Calendar getAltDH( )
-	{
+	public Date getAltDH() {
 		return altDH;
 	}
 
 	/**
-	 * Configura a data e hora da alteração do endereço.
-	 * @param altDH {@link Calendar} com a data e hora da alteração do endereço
+	 * Configura a data e hora da alteracao do endereco.
+	 * @param altDH {@link Date} com a data e hora da alteracao do endereco
 	 */
-	public void setAltDH( Calendar altDH )
-	{
+	public void setAltDH(Date altDH) {
 		this.altDH = altDH;
+	}
+	
+	public EnderecoDTO toView() {
+	    EnderecoDTO enderecoDTO = new EnderecoDTO();
+	    
+	    enderecoDTO.setIdEndereco (this.getIdEndereco()                              );
+	    enderecoDTO.setBairro     (StringUtils.trimToEmpty    (this.getBairro     ()));
+	    enderecoDTO.setCep        (StringUtils.trimToEmpty    (this.getCep        ()));
+	    enderecoDTO.setCidade     (StringUtils.trimToEmpty    (this.getCidade     ()));
+	    enderecoDTO.setComplemento(StringUtils.trimToEmpty    (this.getComplemento()));
+	    enderecoDTO.setLogradouro (StringUtils.trimToEmpty    (this.getLogradouro ()));
+	    enderecoDTO.setNumero     (this.getNumero()                                  );
+	    enderecoDTO.setUf         (StringUtils.trimToEmpty    (this.getUf         ()));
+	    enderecoDTO.setAltDH      (Util.converteDateParaString(this.getAltDH      ()));
+	    enderecoDTO.setIncDH      (Util.converteDateParaString(this.getIncDH      ()));
+	    
+	    return enderecoDTO;
 	}
 }

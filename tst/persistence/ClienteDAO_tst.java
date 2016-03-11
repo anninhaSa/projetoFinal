@@ -4,118 +4,64 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import util.Util;
+import persistence.impl.ClienteDAOImpl;
+import util.PessoaTeste;
 import entity.Cliente;
-import entity.Contato;
-import entity.Endereco;
+import entity.Telefone;
 
-public class ClienteDAO_tst extends TestCase
-{
+public class ClienteDAO_tst extends TestCase {
+    ClienteDAO clienteDAO;
+    
+    @Before
+    protected void setUp() throws Exception {
+        super.setUp();
+        PessoaTeste.init();
+        clienteDAO = new ClienteDAOImpl();
+        clienteDAO.excluiCliente(PessoaTeste.anna);
+        clienteDAO.excluiCliente(PessoaTeste.leda);
+        clienteDAO.excluiCliente(PessoaTeste.deny);
+        clienteDAO.excluiCliente(PessoaTeste.denise);
+        clienteDAO.excluiCliente(PessoaTeste.kamilla);
+        clienteDAO.excluiCliente(PessoaTeste.vitor);
+    }
+    
 	@Test
-	public void testInsereCliente( )
-	{
-		boolean    bOk = false;
-		ClienteDAO cd  = new ClienteDAO( );
+	public void testInsereCliente() {
+		boolean bOk = false;
 		
-		Cliente c = new Cliente( "Anna", Util.trataData("03/11/1986"), null, null );
+		//TESTE INSERT COMPLET CUSTOMER
+		bOk = clienteDAO.insereCliente(PessoaTeste.anna);
 		
-		c.setContato( new Contato( "annasa03@gmail.com.br", null, null, null, null ) ); 
+		assertTrue(bOk);
+		//TESTE INSERT CUSTOMER WITH ADDRESS
+		PessoaTeste.leda.getContato().setEndereco(null);
+		bOk = bOk && clienteDAO.insereCliente(PessoaTeste.leda);
+		assertTrue(bOk);
 		
-		// É necessário adicionar o contato na pessoa e depois a pessoa no contato. Se isso não for feito o idPessoa do contato será NULL pois a pessoa do contato está NULL.
-		c.getContato( ).setPessoa( c );
+		// TESTE INSERT CUSTOMER ONLY WHITH RESIDENCIAL PHONE
+		bOk = bOk && clienteDAO.insereCliente(PessoaTeste.deny);
+		assertTrue(bOk);
 		
-//		c.getContato( ).setEndereco( new Endereco( "Rua do Coelho", 773, "casa 3", "Baldeador", "Niterói", "RJ", "24140050" ) );
-//		c.getContato( ).getEndereco( ).setContato( c.getContato( ) );
+		//TESTE INSERT CUSTOMER ONLY WITH COMERCIAL PHONE
+		bOk = bOk && clienteDAO.insereCliente(PessoaTeste.denise);
+        assertTrue(bOk);
 		
-		c.getContato( ).setTelResidencial( "2126252115" );
-
-		c.getContato( ).setTelComercial( "2132335200" );
-
-		c.getContato( ).setTelCelular( "21995582559" );
+		//TESTE INSERT CUSTOMER ONLY WITH CELLPHONE
+		bOk = bOk && clienteDAO.insereCliente(PessoaTeste.vitor);
+        assertTrue(bOk);
 		
-		bOk = cd.insereCliente( c );
-		
-		c = new Cliente( "Leda", Util.trataData("26/08/2008"), null, null );
-		
-		c.setContato( new Contato( "leda.maria@gmail.com.br", null, null, null, null ) );
-		
-		// É necessário adicionar o contato na pessoa e depois a pessoa no contato. Se isso não for feito o idPessoa do contato será NULL pois a pessoa do contato está NULL.
-		c.getContato( ).setPessoa( c );
-		
-//		c.getContato( ).setEndereco( new Endereco( "Rua do Coelho", 773, "casa 1", "Baldeador", "Niterói", "RJ", "24140050" ) );
-//		c.getContato( ).getEndereco( ).setContato( c.getContato( ) );
-		
-		c.getContato( ).setTelResidencial( "2136015662" );
-		
-		bOk = bOk && cd.insereCliente( c );
-		
-		assertTrue( bOk );
-		
-		c = new Cliente( "Deny", Util.trataData("15/05/1935"), null, null );
-		
-		c.setContato( new Contato( "deny.lopes@gmail.com.br", null, null, null, null ) );
-		
-		// É necessário adicionar o contato na pessoa e depois a pessoa no contato. Se isso não for feito o idPessoa do contato será NULL pois a pessoa do contato está NULL.
-		c.getContato( ).setPessoa( c );
-		
-//		c.getContato( ).setEndereco( new Endereco( "Rua Quintino Bocaiúva", 647, "casa 1", "Caramujo", "Niterói", "RJ", "24140050" ) );
-//		c.getContato( ).getEndereco( ).setContato( c.getContato( ) );
-		
-		c.getContato( ).setTelResidencial( "2126257133" );
-		
-		bOk = bOk && cd.insereCliente( c );
-		
-		c = new Cliente( "Denise", Util.trataData("04/08/1955"), null, null );
-		
-		c.setContato( new Contato( "denise.bastos@gmail.com.br", null, null, null, null ) );
-		
-		// É necessário adicionar o contato na pessoa e depois a pessoa no contato. Se isso não for feito o idPessoa do contato será NULL pois a pessoa do contato está NULL.
-		c.getContato( ).setPessoa( c );
-		
-//		c.getContato( ).setEndereco( new Endereco( "Rua Quintino Bocaiúva", 647, "casa 1", "Caramujo", "Niterói", "RJ", "24140050" ) );
-//		c.getContato( ).getEndereco( ).setContato( c.getContato( ) );
-		
-		c.getContato( ).setTelResidencial( "2126257133" );
-		
-		bOk = bOk && cd.insereCliente( c );
-		
-		c = new Cliente( "Vítor", Util.trataData("29/05/1995"), null, null );
-		
-		c.setContato( new Contato( "vitor.oliveira@gmail.com.br", null, null, null, null ) );
-		
-		// É necessário adicionar o contato na pessoa e depois a pessoa no contato. Se isso não for feito o idPessoa do contato será NULL pois a pessoa do contato está NULL.
-		c.getContato( ).setPessoa( c );
-		
-//		c.getContato( ).setEndereco( new Endereco( "Rua Quintino Bocaiúva", 647, "casa 2", "Caramujo", "Niterói", "RJ", "24140050" ) );
-//		c.getContato( ).getEndereco( ).setContato( c.getContato( ) );
-		
-		c.getContato( ).setTelResidencial( "2126279364" );
-		
-		bOk = bOk && cd.insereCliente( c );
-		
-		c = new Cliente( "Kamilla", Util.trataData("22/06/1997"), null, null );
-		
-		c.setContato( new Contato( "kamilla.bastos@gmail.com.br", null, null, null, null ) );
-		
-		// É necessário adicionar o contato na pessoa e depois a pessoa no contato. Se isso não for feito o idPessoa do contato será NULL pois a pessoa do contato está NULL.
-		c.getContato( ).setPessoa( c );
-		
-		c.getContato( ).setEndereco( new Endereco( "Rua do Coelho", 773, "casa 1", "Baldeador", "Niterói", "RJ", "24140050" ) );
-		c.getContato( ).getEndereco( ).setContato( c.getContato( ) );
-		
-		c.getContato( ).setTelResidencial( "2136015662" );
-		
-		bOk = bOk && cd.insereCliente( c );
-		
-		assertTrue( bOk );
+		//TESTE INSERT CUSTOMER ONLY WITH EMAIL AND NAME
+		bOk = bOk && clienteDAO.insereCliente(PessoaTeste.kamilla);
+		assertTrue(bOk);
 	}
 
 	@Test
 	public void testColetaClienteById( )
 	{
-		Cliente cliente = ( new ClienteDAO( ) ).coletaClienteById( 2 );
+		Cliente cliente = ( new ClienteDAOImpl( ) ).coletaClientePeloId( 2 );
 		
 		assertEquals( "Anna", cliente != null ? cliente.getNome( ) : "" );
 	}
@@ -123,47 +69,23 @@ public class ClienteDAO_tst extends TestCase
 	@Test
 	public void testColetaClienteByNome( )
 	{
-		ArrayList<Cliente> aList = ( new ClienteDAO( ) ).coletaClienteByNome( "Kamilla" );
+		ArrayList<Cliente> aList = ( new ClienteDAOImpl( ) ).coletaClientePeloNome( "Anna" );
 		Cliente            cliente = new Cliente( );
 		
 		if( aList != null && aList.size( ) > 0 )
 			cliente = aList.get( 0 );
 		
-		assertEquals( "Kamilla", cliente != null ? cliente.getNome( ) : "" );
-	}
-	
-	@Test
-	public void testColetaClienteByTelefone( )
-	{
-		ArrayList<Cliente> aList = ( new ClienteDAO( ) ).coletaClienteByTelefone( "2126279364" );
-		Cliente            cliente = new Cliente( );
-		
-		if( aList != null && aList.size( ) > 0 )
-			cliente = aList.get( 0 );
-		
-		assertEquals( "Vítor", cliente != null ? cliente.getNome( ) : "" );
-	}
-	
-	@Test
-	public void testColetaClienteByTelefoneAndNome( )
-	{
-		ArrayList<Cliente> aList = ( new ClienteDAO( ) ).coletaClienteByTelefoneAndNome( "2136015662", "Leda" );
-		Cliente            cliente = new Cliente( );
-		
-		if( aList != null && aList.size( ) > 0 )
-			cliente = aList.get( 0 );
-		
-		assertEquals( "Leda", cliente != null ? cliente.getNome( ) : "" );
+		assertEquals( "Anna", cliente != null ? cliente.getNome( ) : "" );
 	}
 	
 	@Test
 	public void testAtualizaCliente( )
 	{
-		Cliente cliente = ( new ClienteDAO( ) ).coletaClienteById( 6 );
+		Cliente cliente = ( new ClienteDAOImpl( ) ).coletaClientePeloId( 6 );
 		
-		cliente.getContato( ).setTelCelular( "21980913746" );
+		cliente.getContato().getListTelefone().add(new Telefone(null, "21", "980913746",Telefone.s_nTpCelular));
 		
-		boolean bOk = ( new ClienteDAO( ) ).atualizaCliente( cliente );
+		boolean bOk = ( new ClienteDAOImpl( ) ).atualizaCliente( cliente );
 		
 		assertTrue( bOk );
 	}

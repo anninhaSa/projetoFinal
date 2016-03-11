@@ -1,15 +1,15 @@
-package process;
+package service;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import persistence.AutenticacaoDao;
+import persistence.impl.AutenticacaoDaoImpl;
 import util.StatusRetorno;
 import util.Tela;
 import entity.Autenticacao;
 
 /**
- * Classe responsável pelo processamento da autenticação (Login e Logout)
+ * Classe responsï¿½vel pelo processamento da autenticaï¿½ï¿½o (Login e Logout)
  */
 public class ProcessaAutenticacao
 {
@@ -17,13 +17,13 @@ public class ProcessaAutenticacao
 	 * Efetua o login.
 	 * @param sRetorno {@link StatusRetorno}
 	 * @param autenticacao {@link Autenticacao}
-	 * @return {@link Autenticacao} caso a autenticação informada esteja correta e <code>NULL</code> caso contrário.
+	 * @return {@link Autenticacao} caso a autenticaï¿½ï¿½o informada esteja correta e <code>NULL</code> caso contrï¿½rio.
 	 */
 	public static Autenticacao efetuaLogin( StatusRetorno sRetorno, Autenticacao autenticacao )
 	{
 		try
 		{
-			autenticacao = new AutenticacaoDao( ).coletaAutenticacao( autenticacao );
+			autenticacao = new AutenticacaoDaoImpl( ).coletaAutenticacao( autenticacao );
 		}
 		catch ( Exception e )
 		{
@@ -37,7 +37,7 @@ public class ProcessaAutenticacao
 	/**
 	 * Efetua o logout.
 	 * @param fc {@link FacesContext}
-	 * @return o nome da página inicial (autenticação) do sistema
+	 * @return o nome da pï¿½gina inicial (autenticaï¿½ï¿½o) do sistema
 	 */
 	public static String efetuaLogout( FacesContext fc )
 	{

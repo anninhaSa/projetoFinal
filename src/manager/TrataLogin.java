@@ -2,7 +2,7 @@ package manager;
 
 import javax.faces.context.FacesContext;
 
-import process.ProcessaAutenticacao;
+import service.ProcessaAutenticacao;
 import util.Util;
 import entity.Autenticacao;
 
@@ -32,8 +32,8 @@ public class TrataLogin
 	}
 	
 	/**
-	 * Coleta o nome do usuário logado no sistema.
-	 * @return nome do usuário logado no sistema
+	 * Coleta o nome do usuï¿½rio logado no sistema.
+	 * @return nome do usuï¿½rio logado no sistema
 	 */
 	public String getNomeUsrLogado( )
 	{
@@ -46,8 +46,8 @@ public class TrataLogin
 	}
 	
 	/**
-	 * Configura o nome do usuário logado.
-	 * @param strNomeUsrLogado nome do usuário logado no sistema
+	 * Configura o nome do usuï¿½rio logado.
+	 * @param strNomeUsrLogado nome do usuï¿½rio logado no sistema
 	 */
 	public void setNomeUsrLogado( String strNomeUsrLogado )
 	{
@@ -55,8 +55,8 @@ public class TrataLogin
 	}
 	
 	/**
-	 * Verifica se o usuário está logado no sistema.
-	 * @return <code>TRUE</code> caso exista usuário logado no sistema e <code>FALSE</code> caso contrário.
+	 * Verifica se o usuï¿½rio estï¿½ logado no sistema.
+	 * @return <code>TRUE</code> caso exista usuï¿½rio logado no sistema e <code>FALSE</code> caso contrï¿½rio.
 	 */
 	public boolean isUsrLogado( FacesContext fc )
 	{
@@ -68,7 +68,7 @@ public class TrataLogin
 	/**
 	 * Efetua logout.
 	 * @param fc {@link FacesContext}
-	 * @return o nome da página inicial (autenticação) do sistema
+	 * @return o nome da pï¿½gina inicial (autenticaï¿½ï¿½o) do sistema
 	 */
 	public String efetuaLogout( )
 	{

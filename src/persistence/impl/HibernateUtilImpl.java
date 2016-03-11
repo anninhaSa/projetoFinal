@@ -1,12 +1,12 @@
-package persistence;
+package persistence.impl;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
 /**
- * Classe que provê recurso para se conectar ao BD.
+ * Classe que provï¿½ recurso para se conectar ao BD.
  */
-public class HibernateUtil
+public class HibernateUtilImpl
 {
 	private static final SessionFactory sessionFactory;
 	
@@ -18,7 +18,7 @@ public class HibernateUtil
 		}
 		catch ( Exception e )
 		{
-			System.err.println( "A criação de SessionFactory falhou." + e );
+			System.err.println( "A criaï¿½ï¿½o de SessionFactory falhou." + e );
 			throw new ExceptionInInitializerError( e );
 		}
 	}

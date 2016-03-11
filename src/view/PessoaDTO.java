@@ -1,64 +1,39 @@
 package view;
 
-import entity.Contato;
+import org.apache.commons.lang.StringUtils;
+
+import util.Util;
 import entity.Pessoa;
 
+/**
+ * Classe (camada de visão - DTO: Data Transfer Object) com atributos da pessoa (cliente e funcionario).
+ */
 public class PessoaDTO {
 
-	private Integer idPessoa;
-	private String nome;
-	private String dataNasc;
-	private String rg;
-	private String cpf;
-	private Integer tpPessoa;
+	private Integer    idPessoa;
+	private String     nome;
+	private String     dataNasc;
+	private String     rg;
+	private String     cpf;
+	private Integer    tpPessoa;
 	private ContatoDTO contato;
-	private String incDH;
-	private String altDH;
+	private String     incDH;
+	private String     altDH;
 
-	/**
-	 * Construtor da classe {@link PessoaDTO} (inicializa todos os atributos).
-	 */
 	public PessoaDTO() {
-		setIdPessoa(0);
-		setNome("");
-		setDataNasc("");
-		setRG("");
-		setCPF("");
-		setTpPessoa(0);
-		setContato(new ContatoDTO());
+		setIdPessoa(0               );
+		setNome    (""              );
+		setDataNasc(""              );
+		setRG      (""              );
+		setCPF     (""              );
+		setTpPessoa(0               );
+		setContato (new ContatoDTO());
 	}
 
 	/**
-	 * Construtor da classe {@link PessoaDTO} com os atributos DA CLASSE parametrizados.
-	 * 
-	 * @param idPessoa Codigo identificador da pessoa
-	 * @param nome Nome da Pessoa
-	 * @param dataNasc Data de Nascimento
-	 * @param rg RG
-	 * @param cpf CPF
-	 * @param tpPessoa
-	 *            Tipo de Pessoa: <div style="margin-left: 60px">
-	 *            <ul>
-	 *            <li>1 - Cliente</li>
-	 *            <li>2 - Funcionario</li>
-	 *            <li>3 - Administrador</li>
-	 *            </ul>
-	 *            </div>
-	 */
-	public PessoaDTO(Integer idPessoa, String nome, String dataNasc, String rg, String cpf, Integer tpPessoa) {
-		setIdPessoa(idPessoa);
-		setNome(nome);
-		setDataNasc(dataNasc);
-		setRG(rg);
-		setCPF(cpf);
-		setTpPessoa(tpPessoa);
-		setContato(new ContatoDTO());
-	}
-
-	/**
-	 * Construtor da classe {@link Pessoa} com TODOS os atributos parametrizados
+	 * Construtor da classe {@link PessoaDTO} com TODOS os atributos parametrizados
 	 * (os atributos da classe e os objetos de outras classes que estao
-	 * relacionados com {@link Pessoa}).
+	 * relacionados com {@link PessoaDTO}).
 	 * 
 	 * @param idPessoa Codigo identificador da pessoa
 	 * @param nome Nome da Pessoa
@@ -73,17 +48,16 @@ public class PessoaDTO {
 	 *            <li>3 - Administrador</li>
 	 *            </ul>
 	 *            </div>
-	 * @param contato
-	 *            {@link Contato}
+	 * @param contato {@link ContatoDTO}
 	 */
 	public PessoaDTO(Integer idPessoa, String nome, String dataNasc, String rg, String cpf, Integer tpPessoa, ContatoDTO contato) {
 		setIdPessoa(idPessoa);
-		setNome(nome);
+		setNome    (nome    );
 		setDataNasc(dataNasc);
-		setRG(rg);
-		setCPF(cpf);
+		setRG      (rg      );
+		setCPF     (cpf     );
 		setTpPessoa(tpPessoa);
-		setContato(contato);
+		setContato (contato );
 	}
 
 	/*
@@ -116,92 +90,42 @@ public class PessoaDTO {
 		return bEquals;
 	}
 
-	/**
-	 * Configura Id da pessoa.
-	 * 
-	 * @return Id da pessoa
-	 */
 	public Integer getIdPessoa() {
 		return idPessoa;
 	}
 
-	/**
-	 * Coleta Id da pessoa.
-	 * 
-	 * @param idPessoa
-	 */
 	public void setIdPessoa(Integer idPessoa) {
 		this.idPessoa = idPessoa;
 	}
 
-	/**
-	 * Coleta o nome da pessoa.
-	 * 
-	 * @return nome da pessoa.
-	 */
 	public String getNome() {
 		return nome;
 	}
 
-	/**
-	 * Configura o nome da pessoa.
-	 * 
-	 * @param nome nome da pessoa
-	 */
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	/**
-	 * Coleta a data de nascimento.
-	 * 
-	 * @return data de nascimento
-	 */
 	public String getDataNasc() {
 		return dataNasc;
 	}
 
-	/**
-	 * Configura a data de nascimento.
-	 * 
-	 * @param dataNasc data de nascimento
-	 */
 	public void setDataNasc(String dataNasc) {
 		this.dataNasc = dataNasc;
 	}
 
-	/**
-	 * Coleta o RG.
-	 * 
-	 * @return RG
-	 */
 	public String getRG() {
 		return rg;
 	}
 
-	/**
-	 * Configura o RG.
-	 * 
-	 * @param rg RG
-	 */
 	public void setRG(String rg) {
 		this.rg = rg;
 	}
 
-	/**
-	 * Coleta o CPF.
-	 * 
-	 * @return CPF
-	 */
 	public String getCPF() {
 		return cpf;
 	}
 
-	/**
-	 * Configura o CPF.
-	 * 
-	 * @param cpf CPF
-	 */
 	public void setCPF(String cpf) {
 		this.cpf = cpf;
 	}
@@ -230,20 +154,10 @@ public class PessoaDTO {
 		this.tpPessoa = tpPessoa;
 	}
 
-	/**
-	 * Coleta contato.
-	 * 
-	 * @return {@link ContatoDTO}
-	 */
 	public ContatoDTO getContato() {
 		return contato;
 	}
 
-	/**
-	 * Configura contato.
-	 * 
-	 * @param contato {@link ContatoDTO}
-	 */
 	public void setContato(ContatoDTO contato) {
 		this.contato = contato;
 	}
@@ -282,5 +196,34 @@ public class PessoaDTO {
 	 */
 	public void setAltDH(String altDH) {
 		this.altDH = altDH;
+	}
+	
+	public Pessoa toEntity() {
+	    Pessoa pessoa = new Pessoa();
+	    
+	    pessoa.setIdPessoa(this.getIdPessoa());
+	    
+	    pessoa.setNome(StringUtils.trimToNull(this.getNome()));
+	    
+	    if(StringUtils.trimToNull(this.getRG()) != null) {
+	        pessoa.setRG(StringUtils.trimToEmpty(this.getRG()).replaceAll("[.]", "").replaceAll("[-]", ""));
+	    }
+	    
+	    if(StringUtils.trimToNull(this.getCPF()) != null) {
+	        pessoa.setCPF(StringUtils.trimToEmpty(this.getCPF()).replaceAll("[.]", "").replaceAll("[-]", ""));
+	    }
+	    
+	    if(!StringUtils.isEmpty(this.getDataNasc())) {
+	        pessoa.setDataNasc(Util.converteStringParaDate(this.getDataNasc()));
+	    } else {
+	        pessoa.setDataNasc(null);
+	    }
+	    
+	    if(this.getContato() != null) {
+	        pessoa.setContato(this.getContato().toEntity());
+	        pessoa.getContato().setPessoa(pessoa);
+	    }
+	    
+	    return pessoa;
 	}
 }
