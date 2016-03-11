@@ -3,3 +3,7 @@
 /build
 #Arquivo MANIFEST.MF
 MANIFEST.MF
+*.settings
+.classpath
+*.metadata
+.project
