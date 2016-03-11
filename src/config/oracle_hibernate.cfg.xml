@@ -20,5 +20,6 @@
 		<mapping class="entity.Funcionario" />
 		<mapping class="entity.Pessoa" />
 		<mapping class="entity.Servico" />
+		<mapping class="entity.Telefone" />
 	</session-factory>
 </hibernate-configuration>
